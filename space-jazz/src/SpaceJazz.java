@@ -1,10 +1,22 @@
-//spaceswag
+//
+//	Project space-jazz
+//	Licenced under the Genereal Public Licence v2
+//
+//	SpaceJazz.java
+//	jazz? yes.
+//
+
+import javax.sound.sampled.AudioPermission;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class SpaceJazz {
 
+	static SoundPlayer sound;
+	
 	public static void main(String[] args) {
+		sound = new SoundPlayer("D:\\Audio\\Random\\Near Light Short WAV.wav");
+		
 		JFrame f = new JFrame("DEBUG TEST");
 		f.setSize(200, 200);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,6 +37,12 @@ public class SpaceJazz {
 				{
 					String debug = "";
 
+					if (input.IsKeyPressed(InputManager.Key.ArrowRight))
+					{
+						sound.Stop();
+						System.out.println("right");
+					}
+					
 					if (input.IsKeyDown(InputManager.Key.ArrowDown)) {
 						debug += " ArrowDown";
 					}
@@ -45,7 +63,17 @@ public class SpaceJazz {
 						debug += " SpaceBar";
 					}
 
-					System.out.println(debug);
+					if (debug != "") {
+						//System.out.println(debug);
+					}
+					
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
 
 			}
@@ -55,6 +83,9 @@ public class SpaceJazz {
 		f.requestFocus();
 		p.requestFocus();
 		t.start();
+		
+		
+		sound.Play();
 	}
 
 }

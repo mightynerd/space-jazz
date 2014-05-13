@@ -1,12 +1,25 @@
+//
+//	Project space-jazz
+//	Licenced under the Genereal Public Licence v2
+//
+//	InputManager.java
+//	Registers keyboard input for supported keys, supports multiple keys at once.
+//
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class InputManager implements KeyListener{
 
+	private boolean preRightArrow = false;
 	private boolean rightArrow = false;
+	private boolean preLeftArrow = false;
 	private boolean leftArrow = false;
+	private boolean preUpArrow = false;
 	private boolean upArrow = false;
+	private boolean preDownArrow = false;
 	private boolean downArrow = false;
+	private boolean preSpaceBar = false;
 	private boolean spaceBar = false;
 	
 	//Supported keys:
@@ -24,7 +37,8 @@ public class InputManager implements KeyListener{
 		
 	}
 	
-	public boolean IsKeyDown(Key key)
+	//Note: doesn't work yet!
+	public boolean IsKeyPressed(Key key)
 	{
 		switch (key) {
 		case ArrowRight:
@@ -47,8 +61,39 @@ public class InputManager implements KeyListener{
 		}
 	}
 	
+	public boolean IsKeyDown(Key key)
+	{
+		switch (key) {
+		case ArrowRight:
+			if (rightArrow == true && preRightArrow == false)
+			{
+				return true;
+			} else {return false;}
+			
+		case ArrowLeft:
+			return leftArrow;
+		
+		case ArrowUp:
+			return upArrow;
+			
+		case ArrowDown:
+			return downArrow;
+			
+		case SpaceBar:
+			return spaceBar;
+			
+		default:
+			return false;
+		}
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
+		preDownArrow = downArrow;
+		preUpArrow = upArrow;
+		preLeftArrow = leftArrow;
+		preRightArrow = rightArrow;
+		preSpaceBar = spaceBar;
 		
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
@@ -75,6 +120,12 @@ public class InputManager implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		preDownArrow = downArrow;
+		preUpArrow = upArrow;
+		preLeftArrow = leftArrow;
+		preRightArrow = rightArrow;
+		preSpaceBar = spaceBar;
+		
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
 			upArrow = false;
