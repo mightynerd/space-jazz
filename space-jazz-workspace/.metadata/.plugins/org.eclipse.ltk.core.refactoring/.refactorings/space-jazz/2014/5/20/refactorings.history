@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete element from project &apos;space-jazz&apos;&#x0D;&#x0A;- Original project: &apos;space-jazz&apos;&#x0D;&#x0A;- Original element: &apos;Debug.java&apos;" description="Delete element" element1="/src&lt;{Debug.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1399965357891" subPackages="false" version="1.0"/>
-</session>
