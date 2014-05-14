@@ -28,7 +28,7 @@ public class LoginWindow extends JFrame implements ActionListener
 		tfUserName = new JTextField();
 		tfPasswd = new JTextField();
 		
-		lblUserName = new JLabel("Username");
+		lblUserName = new JLabel("Username:");
 		lblPasswd = new JLabel("Password:");
 		
 		btnSignIn = new JButton("Sign in");

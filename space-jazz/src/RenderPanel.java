@@ -19,6 +19,7 @@ public class RenderPanel extends JPanel{
 
 	public void DrawSprite()
 	{
+		g.setColor(Color.RED);
 		g.fillRect(20, 20, 20, 20);
 	}
 
