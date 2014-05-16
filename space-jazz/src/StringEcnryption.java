@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -33,7 +34,9 @@ public class StringEcnryption {
 	private SecretKeySpec key;
 	private IvParameterSpec ivSpec;
 	
-	public void ObjectCrypter(String KeyString,   byte[] ivBytes) {
+	public void ObjectCrypter(String KeyString) {
+		byte[] ivBytes = ByteBuffer.allocate(8).putLong((long)KeyString.hashCode()).array();
+		
 		byte[] keyBytes = null;
 		try {
 			keyBytes = convertToByteArray(KeyString);

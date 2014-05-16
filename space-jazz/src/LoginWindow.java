@@ -3,7 +3,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.ShortBufferException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -92,7 +98,14 @@ public class LoginWindow extends JFrame implements ActionListener
 	{
 		LoginWindow l = new LoginWindow();
 		StringEcnryption enc = new StringEcnryption();
-		enc.
-		System.out.println(enc.encrypt("HELLO"));
+		enc.ObjectCrypter("1234567891234567");
+		try {
+			byte[] encrypted = enc.encrypt("hfjfhfhfhgYwerwtwtergaergdgergergaegegeg4");
+			System.out.println(encrypted);
+			System.out.println(enc.decrypt(encrypted));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
