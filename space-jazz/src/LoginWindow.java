@@ -97,12 +97,12 @@ public class LoginWindow extends JFrame implements ActionListener
 	public static void main(String[] args)
 	{
 		LoginWindow l = new LoginWindow();
-		StringEcnryption enc = new StringEcnryption();
+		StringEncryptor enc = new StringEncryptor();
 		enc.ObjectCrypter("1234567891234567");
 		try {
-			byte[] encrypted = enc.encrypt("hfjfhfhfhgYwerwtwtergaergdgergergaegegeg4");
+			byte[] encrypted = enc.Encrypt("hfjfhfhfhgYwerwtwtergaergdgergergaegegeg4");
 			System.out.println(encrypted);
-			System.out.println(enc.decrypt(encrypted));
+			System.out.println(enc.Decrypt(encrypted));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
