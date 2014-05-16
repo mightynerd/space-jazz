@@ -91,5 +91,8 @@ public class LoginWindow extends JFrame implements ActionListener
 	public static void main(String[] args)
 	{
 		LoginWindow l = new LoginWindow();
+		StringEcnryption enc = new StringEcnryption();
+		enc.
+		System.out.println(enc.encrypt("HELLO"));
 	}
 }
