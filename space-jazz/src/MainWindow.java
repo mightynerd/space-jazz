@@ -51,8 +51,9 @@ public class MainWindow extends JFrame implements Runnable{
 			Draw();
 			
 			try {
-				Thread.sleep(17);
-			} catch (InterruptedException e) {
+				System.out.println("");
+				//Thread.sleep(1);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
