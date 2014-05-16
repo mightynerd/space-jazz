@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -11,14 +12,18 @@ public class MainWindow extends JFrame implements Runnable{
 	public static final int WIN_WIDTH = 1280;
 	public static final int WIN_HEIGHT = 720;
 	
+	//Used components
 	private InputManager inputManager;
 	private Thread gameThread;
+	private Renderer renderer;
 	
-	BufferedImage backBuffer;
-	
+	//Framerate and timing
 	long previousTime;
 	long currentTime;
 	int framerate = 0;
+	
+	//Game objects
+	Sprite test;
 	
 	public MainWindow()
 	{
@@ -33,7 +38,9 @@ public class MainWindow extends JFrame implements Runnable{
 		
 		this.setVisible(true);
 		
-		backBuffer = new BufferedImage(WIN_WIDTH, WIN_HEIGHT, BufferedImage.TYPE_INT_RGB);
+		renderer = new Renderer(WIN_WIDTH, WIN_HEIGHT);
+		
+		Init();
 		
 		//SwingUtilities.invokeLater(this);
 		gameThread = new Thread(this);
@@ -61,26 +68,31 @@ public class MainWindow extends JFrame implements Runnable{
 		}
 	}
 	
+	public void Init()
+	{
+		test = new Sprite(20, 20);
+		test.LoadTexture("content\\eclipse.png");
+	}
+	
 	public void Update()
 	{
 		framerate = (int) (1000 / ((currentTime - previousTime) / 1000000));
+		test.Update(currentTime - previousTime);
 	}
 	
 	public void Draw()
 	{
-		Graphics g = this.getGraphics();
-		Graphics b = backBuffer.getGraphics();
-		
-		b.setColor(Color.BLACK);
-		b.fillRect(0, 0, WIN_WIDTH, WIN_HEIGHT);
+		//Clear backbuffer:
+		renderer.Clear();
 		
 		//Draw objects:
-		b.setColor(Color.GREEN);
-		b.fillOval(50, 50, 300, 300);
+		renderer.DrawString("Framerate: " + framerate, 20, 700, Color.GREEN);
 		
-		b.drawString("hej" + framerate, 50, 700);
+		test.Draw(renderer);
 		
-		//End draw
-		g.drawImage(backBuffer, 0, 0, this);
+		//--- End draw
+		
+		//Draw backbuffer
+		this.getGraphics().drawImage(renderer.GetBackBuffer(), 0, 0, this);
 	}
 }
