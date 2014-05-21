@@ -4,16 +4,28 @@ import javax.swing.ImageIcon;
 
 public class Sprite {
 
-	ImageIcon texture;
-	Vector2D pos;
-	Vector2D velocity;
-	Vector2D direction;
+	private ImageIcon texture;
+	private int width;
+	private int height;
+	private Vector2D pos;
+	private Vector2D velocity;
+	private Vector2D direction;
 	
 	public Sprite(int startX, int startY)
 	{
 		pos = new Vector2D(startX, startY);
 		velocity = new Vector2D(150.0f, 40.0f);
 		direction = new Vector2D(1.0f, 1.0f);
+	}
+	
+	public int GetWidth()
+	{
+		return width;
+	}
+	
+	public int GetHeight()
+	{
+		return height;
 	}
 	
 	public Image GetTexture()
@@ -29,6 +41,8 @@ public class Sprite {
 	public void LoadTexture(String path)
 	{
 		texture = new ImageIcon(path);
+		width = texture.getIconWidth();
+		width = texture.getIconHeight();
 	}
 	
 	public void Update(float delta)
@@ -43,6 +57,11 @@ public class Sprite {
 		
 		System.out.println("X: " + pos.X() + " Y: " + pos.Y() + " Delta: " + delta); 
 		
+	}
+	
+	public boolean Collides(Sprite sprite)
+	{
+		return false; //^^
 	}
 	
 	public void Draw(Renderer renderer)

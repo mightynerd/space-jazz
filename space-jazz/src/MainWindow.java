@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 
+
 public class MainWindow extends JFrame implements Runnable{
 
 	public static final int WIN_WIDTH = 1280;
@@ -16,6 +17,7 @@ public class MainWindow extends JFrame implements Runnable{
 	private InputManager inputManager;
 	private Thread gameThread;
 	private Renderer renderer;
+	private StateManager stateManager;
 	
 	//Framerate and timing
 	long previousTime;
@@ -82,15 +84,24 @@ public class MainWindow extends JFrame implements Runnable{
 	
 	public void Init()
 	{
+		stateManager = new StateManager();
+		stateManager.SetState(StateManager.State.Game);
 		test = new Sprite(20, 20);
 		test.LoadTexture("content\\spaceship-v1.png");
 	}
 	
 	public void Update()
 	{
+		//Regardless of state:
 		float delta = (currentTime - previousTime) / 1000000;
 		framerate = (int) (1000 / ((currentTime - previousTime) / 1000000));
-		test.Update(delta);
+		StateManager.State currentState = stateManager.GetState();
+		
+		//State specific:
+		if (currentState == StateManager.State.Game)
+		{
+			test.Update(delta);
+		}
 	}
 	
 	public void Draw()
@@ -98,11 +109,16 @@ public class MainWindow extends JFrame implements Runnable{
 		//Clear backbuffer:
 		renderer.Clear();
 		
-		//Draw objects:
+		StateManager.State currentState = stateManager.GetState();
+		
+		if (currentState == StateManager.State.Game)
+		{
+			//Draw Game
+			test.Draw(renderer);
+		}
+		
+		
 		renderer.DrawString("Framerate: " + framerate, 20, 700, Color.GREEN);
-		
-		test.Draw(renderer);
-		
 		//--- End draw
 		
 		//Draw backbuffer
