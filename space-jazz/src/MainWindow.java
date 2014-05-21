@@ -26,10 +26,10 @@ public class MainWindow extends JFrame implements Runnable{
 	long totalFrames = 0;
 	
 	//Game objects
-	Sprite test;
 	Sprite backGround;
-	Sprite backOverlay;
-	Sprite backOverlay2;
+	SpriteBackOverlay backOverlay;
+	SpriteBackOverlay backOverlay2;
+	SpriteShip ship;
 	
 	public MainWindow()
 	{
@@ -93,14 +93,11 @@ public class MainWindow extends JFrame implements Runnable{
 		backGround = new Sprite(0, 0);
 		backGround.LoadTexture("content\\Space pixel.png");
 		
-		backOverlay = new Sprite(0, 0);
-		backOverlay.LoadTexture("content\\nebula-repeat-v1.png");
-		backOverlay2 = new Sprite(2560, 0);
-		backOverlay2.LoadTexture("content\\nebula-repeat-v1.png");
-		backOverlay2.SetPosition(new Vector2D(2560, 0));
+		backOverlay = new SpriteBackOverlay(0, 0);
+		backOverlay2 = new SpriteBackOverlay(2560, 0);
 		
-		test = new Sprite(20, 20);
-		test.LoadTexture("content\\spaceship-v1.png");
+		ship = new SpriteShip(500, 600);
+		
 	}
 	
 	public void Update()
@@ -113,30 +110,11 @@ public class MainWindow extends JFrame implements Runnable{
 		//State specific:
 		if (currentState == StateManager.State.Game)
 		{
-			test.Update(delta);
+			ship.Update(delta, inputManager);
 			
-			//Background
-			backOverlay.SetDirection(new Vector2D(-1f, 0f));
-			backOverlay.SetVelocity(new Vector2D(500f, 0f));
-			
-			backOverlay2.SetDirection(new Vector2D(-1f, 0f));
-			backOverlay2.SetVelocity(new Vector2D(500f, 0f));
-			
-			if (backOverlay.GetPosition().X() < -2560)
-			{
-				backOverlay.SetPosition(new Vector2D(2560, 0));
-			}
-			
-			if (backOverlay2.GetPosition().X() < -2560)
-			{
-				backOverlay2.SetPosition(new Vector2D(2560, 0));
-			}
 			
 			backOverlay.Update(delta);
 			backOverlay2.Update(delta);
-			
-			System.out.println("BACK1: (" + backOverlay.GetPosition().X() + ", " + backOverlay.GetPosition().Y());
-			System.out.println("BACK1: (" + backOverlay2.GetPosition().X() + ", " + backOverlay2.GetPosition().Y());
 		}
 	}
 	
@@ -155,7 +133,7 @@ public class MainWindow extends JFrame implements Runnable{
 			backOverlay.Draw(renderer);
 			backOverlay2.Draw(renderer);
 			
-			test.Draw(renderer);
+			ship.Draw(renderer);
 		}
 		
 		

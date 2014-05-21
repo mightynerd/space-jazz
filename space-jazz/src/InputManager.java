@@ -65,10 +65,7 @@ public class InputManager implements KeyListener{
 	{
 		switch (key) {
 		case ArrowRight:
-			if (rightArrow == true && preRightArrow == false)
-			{
-				return true;
-			} else {return false;}
+			return rightArrow;
 			
 		case ArrowLeft:
 			return leftArrow;
