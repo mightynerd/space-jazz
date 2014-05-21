@@ -12,8 +12,8 @@ public class Sprite {
 	public Sprite(int startX, int startY)
 	{
 		pos = new Vector2D(startX, startY);
-		velocity = new Vector2D(5, 5);
-		direction = new Vector2D(1, 0);
+		velocity = new Vector2D(150.0f, 40.0f);
+		direction = new Vector2D(1.0f, 1.0f);
 	}
 	
 	public Image GetTexture()
@@ -33,14 +33,15 @@ public class Sprite {
 	
 	public void Update(float delta)
 	{
-		Vector2D newPos = pos;
-		newPos.Multiply(direction);
-		newPos.Multiply(velocity);
-		newPos.Multiply(delta);
+		Vector2D newPos = pos.GetVector();
+		Vector2D modPos = direction.GetVector();
+		modPos.Multiply(velocity);
+		modPos.Multiply(delta / 1000);
 		
-		pos.Add(newPos);
+		newPos.Add(modPos);
+		pos = newPos;
 		
-		System.out.println("X: " + pos.X() + " Y: " + pos.Y()); 
+		System.out.println("X: " + pos.X() + " Y: " + pos.Y() + " Delta: " + delta); 
 		
 	}
 	

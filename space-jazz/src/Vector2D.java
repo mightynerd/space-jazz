@@ -4,7 +4,7 @@ public class Vector2D {
 	private float x;
 	private float y;
 	
-	public Vector2D(int x, int y)
+	public Vector2D(float x, float y)
 	{
 		this.x = x;
 		this.y = y;
@@ -46,6 +46,11 @@ public class Vector2D {
 	{
 		this.x *= val;
 		this.y *= val;
+	}
+	
+	public Vector2D GetVector()
+	{
+		return new Vector2D(this.x,  this.y);
 	}
 	
 }

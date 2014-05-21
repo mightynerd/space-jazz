@@ -21,6 +21,7 @@ public class MainWindow extends JFrame implements Runnable{
 	long previousTime;
 	long currentTime;
 	int framerate = 0;
+	long totalFrames = 0;
 	
 	//Game objects
 	Sprite test;
@@ -52,14 +53,25 @@ public class MainWindow extends JFrame implements Runnable{
 		//GAME LOOP
 		while(true)
 		{
+			totalFrames++;
 			currentTime = System.nanoTime();
 			
-			Update();
-			Draw();
+			if (totalFrames > 5)
+			{
+				Update();
+				Draw();
+			}
+			else
+			{
+				try
+				{
+					Thread.sleep(10);
+				} catch (Exception ex) {}
+			}
 			
 			try {
 				System.out.println("");
-				//Thread.sleep(1);
+				Thread.sleep(50);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -71,13 +83,14 @@ public class MainWindow extends JFrame implements Runnable{
 	public void Init()
 	{
 		test = new Sprite(20, 20);
-		test.LoadTexture("content\\eclipse.png");
+		test.LoadTexture("content\\spaceship-v1.png");
 	}
 	
 	public void Update()
 	{
+		float delta = (currentTime - previousTime) / 1000000;
 		framerate = (int) (1000 / ((currentTime - previousTime) / 1000000));
-		test.Update(currentTime - previousTime);
+		test.Update(delta);
 	}
 	
 	public void Draw()
