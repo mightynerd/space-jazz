@@ -27,6 +27,9 @@ public class MainWindow extends JFrame implements Runnable{
 	
 	//Game objects
 	Sprite test;
+	Sprite backGround;
+	Sprite backOverlay;
+	Sprite backOverlay2;
 	
 	public MainWindow()
 	{
@@ -73,7 +76,7 @@ public class MainWindow extends JFrame implements Runnable{
 			
 			try {
 				System.out.println("");
-				Thread.sleep(50);
+				//Thread.sleep(50);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -86,6 +89,16 @@ public class MainWindow extends JFrame implements Runnable{
 	{
 		stateManager = new StateManager();
 		stateManager.SetState(StateManager.State.Game);
+		
+		backGround = new Sprite(0, 0);
+		backGround.LoadTexture("content\\Space pixel.png");
+		
+		backOverlay = new Sprite(0, 0);
+		backOverlay.LoadTexture("content\\nebula-repeat-v1.png");
+		backOverlay2 = new Sprite(2560, 0);
+		backOverlay2.LoadTexture("content\\nebula-repeat-v1.png");
+		backOverlay2.SetPosition(new Vector2D(2560, 0));
+		
 		test = new Sprite(20, 20);
 		test.LoadTexture("content\\spaceship-v1.png");
 	}
@@ -101,6 +114,29 @@ public class MainWindow extends JFrame implements Runnable{
 		if (currentState == StateManager.State.Game)
 		{
 			test.Update(delta);
+			
+			//Background
+			backOverlay.SetDirection(new Vector2D(-1f, 0f));
+			backOverlay.SetVelocity(new Vector2D(500f, 0f));
+			
+			backOverlay2.SetDirection(new Vector2D(-1f, 0f));
+			backOverlay2.SetVelocity(new Vector2D(500f, 0f));
+			
+			if (backOverlay.GetPosition().X() < -2560)
+			{
+				backOverlay.SetPosition(new Vector2D(2560, 0));
+			}
+			
+			if (backOverlay2.GetPosition().X() < -2560)
+			{
+				backOverlay2.SetPosition(new Vector2D(2560, 0));
+			}
+			
+			backOverlay.Update(delta);
+			backOverlay2.Update(delta);
+			
+			System.out.println("BACK1: (" + backOverlay.GetPosition().X() + ", " + backOverlay.GetPosition().Y());
+			System.out.println("BACK1: (" + backOverlay2.GetPosition().X() + ", " + backOverlay2.GetPosition().Y());
 		}
 	}
 	
@@ -114,6 +150,11 @@ public class MainWindow extends JFrame implements Runnable{
 		if (currentState == StateManager.State.Game)
 		{
 			//Draw Game
+			backGround.Draw(renderer);
+			
+			backOverlay.Draw(renderer);
+			backOverlay2.Draw(renderer);
+			
 			test.Draw(renderer);
 		}
 		

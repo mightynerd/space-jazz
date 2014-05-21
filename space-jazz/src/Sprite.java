@@ -38,6 +38,32 @@ public class Sprite {
 		return pos;
 	}
 	
+	public void SetPosition(Vector2D pos)
+	{
+		this.pos = pos;
+	}
+	
+	public Vector2D GetVelocity()
+	{
+		return this.velocity;
+	}
+	
+	public void SetVelocity(Vector2D vel)
+	{
+		this.velocity = vel;
+	}
+	
+	public Vector2D GetDirection()
+	{
+		return this.direction;
+	}
+	
+	public void SetDirection(Vector2D dir)
+	{
+		this.direction = dir;
+	}
+
+	
 	public void LoadTexture(String path)
 	{
 		texture = new ImageIcon(path);
@@ -55,7 +81,7 @@ public class Sprite {
 		newPos.Add(modPos);
 		pos = newPos;
 		
-		System.out.println("X: " + pos.X() + " Y: " + pos.Y() + " Delta: " + delta); 
+		//System.out.println("X: " + pos.X() + " Y: " + pos.Y() + " Delta: " + delta); 
 		
 	}
 	
