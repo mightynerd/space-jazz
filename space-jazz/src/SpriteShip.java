@@ -44,7 +44,7 @@ public class SpriteShip extends Sprite {
 			SetDirection(new Vector2D(GetDirection().X(), 0f));
 		}
 		
-		System.out.println("DIRECTION:" + GetDirection().X() + ", " + GetDirection().Y());
+		//System.out.println("DIRECTION:" + GetDirection().X() + ", " + GetDirection().Y());
 		
 		super.Update(delta);
 	}

@@ -41,7 +41,6 @@ public class MainWindow extends JFrame implements Runnable{
 		inputManager = new InputManager();
 		this.addKeyListener(inputManager);
 		
-		
 		this.setVisible(true);
 		
 		renderer = new Renderer(WIN_WIDTH, WIN_HEIGHT);
@@ -61,6 +60,7 @@ public class MainWindow extends JFrame implements Runnable{
 			totalFrames++;
 			currentTime = System.nanoTime();
 			
+			//Hotfix for division by zero
 			if (totalFrames > 5)
 			{
 				Update();
@@ -75,7 +75,7 @@ public class MainWindow extends JFrame implements Runnable{
 			}
 			
 			try {
-				System.out.println("");
+				//System.out.println("");
 				//Thread.sleep(50);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -93,8 +93,8 @@ public class MainWindow extends JFrame implements Runnable{
 		backGround = new Sprite(0, 0);
 		backGround.LoadTexture("content\\Space pixel.png");
 		
-		backOverlay = new SpriteBackOverlay(0, 0);
-		backOverlay2 = new SpriteBackOverlay(2560, 0);
+		backOverlay = new SpriteBackOverlay(0, -720);
+		backOverlay2 = new SpriteBackOverlay(0, -2160);
 		
 		ship = new SpriteShip(500, 600);
 		
@@ -106,13 +106,12 @@ public class MainWindow extends JFrame implements Runnable{
 		float delta = (currentTime - previousTime) / 1000000;
 		framerate = (int) (1000 / ((currentTime - previousTime) / 1000000));
 		StateManager.State currentState = stateManager.GetState();
+		//----
 		
 		//State specific:
 		if (currentState == StateManager.State.Game)
 		{
 			ship.Update(delta, inputManager);
-			
-			
 			backOverlay.Update(delta);
 			backOverlay2.Update(delta);
 		}
@@ -125,6 +124,7 @@ public class MainWindow extends JFrame implements Runnable{
 		
 		StateManager.State currentState = stateManager.GetState();
 		
+		//State specific:
 		if (currentState == StateManager.State.Game)
 		{
 			//Draw Game

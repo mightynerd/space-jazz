@@ -4,17 +4,18 @@ public class SpriteBackOverlay extends Sprite {
 	public SpriteBackOverlay(int startX, int startY) {
 		super(startX, startY);
 		
-		SetVelocity(new Vector2D(300f, 0f));
-		LoadTexture("content\\nebula-repeat-v1.png");
-		SetDirection(new Vector2D(-1f, 0f));
+		SetVelocity(new Vector2D(0f, 300f));
+		LoadTexture("content\\nebula-repeat-v2.png");
+		SetDirection(new Vector2D(0f, 1f));
 	}
 
 	@Override
 	public void Update(float delta) {
 		
-		if (GetPosition().X() < -2560)
+		if (GetPosition().Y() > 720)
 		{
-			SetPosition(new Vector2D(2560, 0));
+			System.out.println("SWAP");
+			SetPosition(new Vector2D(0, -2160));
 		}
 		
 		super.Update(delta);
