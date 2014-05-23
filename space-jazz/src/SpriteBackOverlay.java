@@ -5,7 +5,6 @@ public class SpriteBackOverlay extends Sprite {
 		super(startX, startY);
 		
 		SetVelocity(new Vector2D(0f, 300f));
-		LoadTexture("content\\nebula-repeat-v2.png");
 		SetDirection(new Vector2D(0f, 1f));
 	}
 

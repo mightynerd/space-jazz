@@ -6,7 +6,9 @@ public class SpriteShip extends Sprite {
 	
 	public SpriteShip(int startX, int startY) {
 		super(startX, startY);
-		LoadTexture("content\\spaceship-v1.png");
+		AddTexture("content\\spaceship-v1.png");
+		AddTexture("content\\spaceship-v1-dmg1.png");
+		AddTexture("content\\spaceship-v1-dmg2.png");
 	}
 
 	public void Update(float delta, InputManager input) {

@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 
-
 public class MainWindow extends JFrame implements Runnable{
 
 	public static final int WIN_WIDTH = 1280;
@@ -29,6 +28,9 @@ public class MainWindow extends JFrame implements Runnable{
 	Sprite backGround;
 	SpriteBackOverlay backOverlay;
 	SpriteBackOverlay backOverlay2;
+	
+	SpriteBackOverlay backStars1;
+	SpriteBackOverlay backStars2;
 	SpriteShip ship;
 	
 	public MainWindow()
@@ -91,10 +93,15 @@ public class MainWindow extends JFrame implements Runnable{
 		stateManager.SetState(StateManager.State.Game);
 		
 		backGround = new Sprite(0, 0);
-		backGround.LoadTexture("content\\Space pixel.png");
+		backGround.AddTexture("content\\Space pixel.png");
 		
 		backOverlay = new SpriteBackOverlay(0, -720);
 		backOverlay2 = new SpriteBackOverlay(0, -2160);
+		backOverlay.AddTexture("content\\nebula-repeat-v2.png");
+		backOverlay.AddTexture("content\\nebula-repeat-v2.png");
+		
+		backStars1 = new SpriteBackOverlay(0, -720);
+		backStars2 = new SpriteBackOverlay(0, -2160);
 		
 		ship = new SpriteShip(500, 600);
 		
@@ -114,6 +121,16 @@ public class MainWindow extends JFrame implements Runnable{
 			ship.Update(delta, inputManager);
 			backOverlay.Update(delta);
 			backOverlay2.Update(delta);
+			
+			backStars1.Update(delta);
+			backStars2.Update(delta);
+			
+			if (inputManager.IsKeyPressed(InputManager.Key.SpaceBar))
+			{
+				System.out.println("SPACE");
+				//ship.SetCurrentTextureIndex(ship.GetCurrentTextureIndex() + 1);
+			}
+			
 		}
 	}
 	
@@ -129,6 +146,9 @@ public class MainWindow extends JFrame implements Runnable{
 		{
 			//Draw Game
 			backGround.Draw(renderer);
+			
+			backStars1.Draw(renderer);
+			backStars2.Draw(renderer);
 			
 			backOverlay.Draw(renderer);
 			backOverlay2.Draw(renderer);

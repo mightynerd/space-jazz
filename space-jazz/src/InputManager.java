@@ -34,7 +34,7 @@ public class InputManager implements KeyListener{
 	
 	public InputManager()
 	{
-		
+
 	}
 	
 	//Note: doesn't work yet!
@@ -42,19 +42,59 @@ public class InputManager implements KeyListener{
 	{
 		switch (key) {
 		case ArrowRight:
-			return rightArrow;
+			if (rightArrow == true && preRightArrow == false)
+			{
+				preRightArrow = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 			
 		case ArrowLeft:
-			return leftArrow;
+			if (leftArrow == true && preLeftArrow == false)
+			{
+				preLeftArrow = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		
 		case ArrowUp:
-			return upArrow;
+			if (upArrow == true && preUpArrow == false)
+			{
+				preUpArrow = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 			
 		case ArrowDown:
-			return downArrow;
+			if (downArrow == true && preDownArrow == false)
+			{
+				preDownArrow = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 			
 		case SpaceBar:
-			return spaceBar;
+			if (spaceBar == true && preSpaceBar == false)
+			{
+				preSpaceBar = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 			
 		default:
 			return false;
@@ -86,11 +126,11 @@ public class InputManager implements KeyListener{
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		preDownArrow = downArrow;
+		/*preDownArrow = downArrow;
 		preUpArrow = upArrow;
 		preLeftArrow = leftArrow;
 		preRightArrow = rightArrow;
-		preSpaceBar = spaceBar;
+		preSpaceBar = spaceBar; */
 		
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
@@ -117,31 +157,36 @@ public class InputManager implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		preDownArrow = downArrow;
+		/*preDownArrow = downArrow;
 		preUpArrow = upArrow;
 		preLeftArrow = leftArrow;
 		preRightArrow = rightArrow;
-		preSpaceBar = spaceBar;
+		preSpaceBar = spaceBar;*/
 		
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
 			upArrow = false;
+			preUpArrow = false;
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
 			downArrow = false;
+			preDownArrow = false;
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			rightArrow = false;
+			preRightArrow = false;
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			leftArrow = false;
+			preLeftArrow = false;
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
 			spaceBar = false;
+			preSpaceBar = false;
 		}
 		
 	}

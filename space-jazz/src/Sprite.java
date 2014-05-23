@@ -1,10 +1,14 @@
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ImageIcon;
 
 
 public class Sprite {
 
-	private ImageIcon texture;
+	private List<ImageIcon> textures;
+	private int currentTexture = 0;
 	private int width;
 	private int height;
 	private Vector2D pos;
@@ -13,6 +17,7 @@ public class Sprite {
 	
 	public Sprite(int startX, int startY)
 	{
+		textures = new ArrayList<ImageIcon>();
 		pos = new Vector2D(startX, startY);
 		velocity = new Vector2D(150.0f, 40.0f);
 		direction = new Vector2D(1.0f, 1.0f);
@@ -30,7 +35,17 @@ public class Sprite {
 	
 	public Image GetTexture()
 	{
-		return texture.getImage();
+		return textures.get(currentTexture).getImage();
+	}
+	
+	public void SetCurrentTextureIndex(int i)
+	{
+		currentTexture = i;
+	}
+	
+	public int GetCurrentTextureIndex()
+	{
+		return currentTexture;
 	}
 	
 	public Vector2D GetPosition()
@@ -64,11 +79,11 @@ public class Sprite {
 	}
 
 	
-	public void LoadTexture(String path)
+	public void AddTexture(String path)
 	{
-		texture = new ImageIcon(path);
-		width = texture.getIconWidth();
-		width = texture.getIconHeight();
+		textures.add(new ImageIcon(path));
+		width = textures.get(0).getIconWidth();
+		width = textures.get(0).getIconHeight();
 	}
 	
 	public void Update(float delta)
