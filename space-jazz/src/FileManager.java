@@ -53,12 +53,23 @@ public class FileManager
 		try
 		{
 			File usersFile = new File(System.getProperty("user.dir") + "\\users.bin");
+			
+			if (!usersFile.exists())
+			{
+				Users users = new Users();
+				User user = new User("Admin", "StaplesKollegie");
+				user.points = 1000;
+				users.users.add(user);
+				writeFile(users);
+			}
+			
 			FileInputStream inputStream = new FileInputStream(System.getProperty("user.dir") + "\\users.bin");
 			byte[] encXML = new byte[(int) usersFile.length()];
 			String unencXML;
 			JAXBContext jaxbContent = JAXBContext.newInstance(Users.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContent.createUnmarshaller();
 			
+			enc.ObjectCrypter("1863189616648964");
 			inputStream.read(encXML);
 			inputStream.close();
 			unencXML = enc.Decrypt(encXML);

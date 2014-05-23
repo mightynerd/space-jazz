@@ -92,15 +92,19 @@ public class LoginWindow extends JFrame implements ActionListener
 			System.out.println("btnRegister");
 			System.out.println("username: " + tfUserName.getText() + " password: " + String.valueOf(tfPasswd.getPassword()));
 			
-			if (tfUserName.equals("") && String.valueOf(tfPasswd.getPassword()).equals(""))
+			if (tfUserName.getText().equals("") || String.valueOf(tfPasswd.getPassword()).equals(""))
 			{
-				System.out.println("User register");
+				System.out.println("Username or password empty");
+				JOptionPane.showMessageDialog(null, "You have to write both a password and a username");
 			}
 			
 			else
 			{
-				System.out.println("Username or password empty");
-				JOptionPane.showMessageDialog(null, "You have to write both a password and a username");
+				FileManager f = new FileManager();
+				Users users = f.readFile();
+				users.users.add(new User(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())));
+				f.writeFile(users);
+				System.out.println("User added");
 			}
 		}
 	}
