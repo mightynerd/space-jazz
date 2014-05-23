@@ -47,8 +47,6 @@ public class MainWindow extends JFrame implements Runnable{
 		
 		renderer = new Renderer(WIN_WIDTH, WIN_HEIGHT);
 		
-		Init();
-		
 		//SwingUtilities.invokeLater(this);
 		gameThread = new Thread(this);
 		gameThread.start();
@@ -57,6 +55,9 @@ public class MainWindow extends JFrame implements Runnable{
 	@Override
 	public void run() {
 		//GAME LOOP
+		
+		Init();
+		
 		while(true)
 		{
 			totalFrames++;
@@ -98,10 +99,14 @@ public class MainWindow extends JFrame implements Runnable{
 		backOverlay = new SpriteBackOverlay(0, -720);
 		backOverlay2 = new SpriteBackOverlay(0, -2160);
 		backOverlay.AddTexture("content\\nebula-repeat-v2.png");
-		backOverlay.AddTexture("content\\nebula-repeat-v2.png");
+		backOverlay2.AddTexture("content\\nebula-repeat-v2.png");
 		
 		backStars1 = new SpriteBackOverlay(0, -720);
 		backStars2 = new SpriteBackOverlay(0, -2160);
+		backStars1.AddTexture("content\\Transparant-star.png");
+		backStars2.AddTexture("content\\Transparant-star.png");
+		backStars1.SetVelocity(new Vector2D(0f, 100f));
+		backStars2.SetVelocity(new Vector2D(0f, 100f));
 		
 		ship = new SpriteShip(500, 600);
 		
@@ -150,10 +155,10 @@ public class MainWindow extends JFrame implements Runnable{
 			backStars1.Draw(renderer);
 			backStars2.Draw(renderer);
 			
+			ship.Draw(renderer);
+			
 			backOverlay.Draw(renderer);
 			backOverlay2.Draw(renderer);
-			
-			ship.Draw(renderer);
 		}
 		
 		
