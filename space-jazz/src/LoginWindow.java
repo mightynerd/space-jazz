@@ -3,23 +3,19 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.ShortBufferException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
 public class LoginWindow extends JFrame implements ActionListener
 {
 	JTextField tfUserName;
-	JTextField tfPasswd;
+	JPasswordField tfPasswd;
 	
 	JLabel lblUserName;
 	JLabel lblPasswd;
@@ -32,7 +28,7 @@ public class LoginWindow extends JFrame implements ActionListener
 	public LoginWindow()
 	{
 		tfUserName = new JTextField();
-		tfPasswd = new JTextField();
+		tfPasswd = new JPasswordField();
 		
 		lblUserName = new JLabel("Username:");
 		lblPasswd = new JLabel("Password:");
@@ -89,23 +85,28 @@ public class LoginWindow extends JFrame implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0)
+	public void actionPerformed(ActionEvent ae)
 	{
-		
+		if (ae.getSource().equals(btnRegister))
+		{
+			System.out.println("btnRegister");
+			System.out.println("username: " + tfUserName.getText() + " password: " + String.valueOf(tfPasswd.getPassword()));
+			
+			if (tfUserName.equals("") && String.valueOf(tfPasswd.getPassword()).equals(""))
+			{
+				System.out.println("User register");
+			}
+			
+			else
+			{
+				System.out.println("Username or password empty");
+				JOptionPane.showMessageDialog(null, "You have to write both a password and a username");
+			}
+		}
 	}
 	
 	public static void main(String[] args)
 	{
 		LoginWindow l = new LoginWindow();
-		StringEncryptor enc = new StringEncryptor();
-		enc.ObjectCrypter("1234567891234567");
-		try {
-			byte[] encrypted = enc.Encrypt("hfjfhfhfhgYwerwtwtergaergdgergergaegegeg4");
-			System.out.println(encrypted);
-			System.out.println(enc.Decrypt(encrypted));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
