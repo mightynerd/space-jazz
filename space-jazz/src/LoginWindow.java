@@ -102,9 +102,75 @@ public class LoginWindow extends JFrame implements ActionListener
 			{
 				FileManager f = new FileManager();
 				Users users = f.readFile();
-				users.users.add(new User(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())));
-				f.writeFile(users);
-				System.out.println("User added");
+				
+				Boolean userAvailable = false;
+				
+				for (User user : users.users)
+				{
+					if (user.userName.equals(tfUserName.getText()))
+					{
+						userAvailable = true;
+					}
+				}
+				
+				if (userAvailable == false)
+				{
+					users.users.add(new User(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())));
+					f.writeFile(users);
+					System.out.println("User added");
+				}
+				
+				else
+				{
+					JOptionPane.showMessageDialog(null, "User already exists");
+				}
+			}
+		}
+		
+		else if (ae.getSource().equals(btnSignIn) || ae.getSource().equals(tfUserName) || ae.getSource().equals(tfPasswd))
+		{
+			System.out.println("btnSignIn");
+			System.out.println("username: " + tfUserName.getText() + " password: " + String.valueOf(tfPasswd.getPassword()));
+			
+			if (tfUserName.getText().equals("") || String.valueOf(tfPasswd.getPassword()).equals(""))
+			{
+				System.out.println("Username or password empty");
+				JOptionPane.showMessageDialog(null, "You have to write both a password and a username");
+			}
+			
+			else
+			{
+				FileManager f = new FileManager();
+				Users users = f.readFile();
+				Boolean userAvailable = false;
+				Boolean passwordCorrect = false;
+				
+				for (User user : users.users)
+				{
+					if (user.userName.equals(tfUserName.getText()))
+					{
+						userAvailable = true;
+						if (user.password.equals(String.valueOf(tfPasswd.getPassword())))
+						{
+							passwordCorrect = true;
+						}
+					}
+				}
+				
+				if (userAvailable && passwordCorrect)
+				{
+					MainWindow m = new MainWindow();
+				}
+				
+				else if (userAvailable && !passwordCorrect)
+				{
+					JOptionPane.showMessageDialog(null, "Incorect password");
+				}
+				
+				else if (!userAvailable)
+				{
+					JOptionPane.showMessageDialog(null, "Incorect username");
+				}
 			}
 		}
 	}
