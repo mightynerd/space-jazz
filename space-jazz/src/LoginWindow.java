@@ -102,18 +102,9 @@ public class LoginWindow extends JFrame implements ActionListener
 			{
 				FileManager f = new FileManager();
 				Users users = f.readFile();
+
 				
-				Boolean userAvailable = false;
-				
-				for (User user : users.users)
-				{
-					if (user.userName.equals(tfUserName.getText()))
-					{
-						userAvailable = true;
-					}
-				}
-				
-				if (userAvailable == false)
+				if (!users.userExists(tfUserName.getText()))
 				{
 					users.users.add(new User(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())));
 					f.writeFile(users);
@@ -142,34 +133,16 @@ public class LoginWindow extends JFrame implements ActionListener
 			{
 				FileManager f = new FileManager();
 				Users users = f.readFile();
-				Boolean userAvailable = false;
-				Boolean passwordCorrect = false;
 				
-				for (User user : users.users)
-				{
-					if (user.userName.equals(tfUserName.getText()))
-					{
-						userAvailable = true;
-						if (user.password.equals(String.valueOf(tfPasswd.getPassword())))
-						{
-							passwordCorrect = true;
-						}
-					}
-				}
-				
-				if (userAvailable && passwordCorrect)
+				if (users.correctPassword(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())))
 				{
 					MainWindow m = new MainWindow();
+					dispose();
 				}
 				
-				else if (userAvailable && !passwordCorrect)
+				else
 				{
-					JOptionPane.showMessageDialog(null, "Incorect password");
-				}
-				
-				else if (!userAvailable)
-				{
-					JOptionPane.showMessageDialog(null, "Incorect username");
+					JOptionPane.showMessageDialog(null, "Username or password incorrect");
 				}
 			}
 		}
