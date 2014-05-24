@@ -51,9 +51,11 @@ public class LoginWindow extends JFrame implements ActionListener
 		setLocation(400, 200);
 		setResizable(false);
 		setTitle("Sign in");
+		//For the layout
 		c.insets = new Insets(3, 3, 3, 3);
 		c.fill = GridBagConstraints.BOTH;
 		
+		//ActionListeners on the textFields makes it possible to press return to sign in
 		tfUserName.addActionListener(this);
 		tfPasswd.addActionListener(this);
 		btnSignIn.addActionListener(this);
@@ -87,11 +89,14 @@ public class LoginWindow extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent ae)
 	{
+		//Register button pressed
 		if (ae.getSource().equals(btnRegister))
 		{
+			//For debug
 			System.out.println("btnRegister");
 			System.out.println("username: " + tfUserName.getText() + " password: " + String.valueOf(tfPasswd.getPassword()));
 			
+			//If there are no username or password it will create a message box
 			if (tfUserName.getText().equals("") || String.valueOf(tfPasswd.getPassword()).equals(""))
 			{
 				System.out.println("Username or password empty");
@@ -100,17 +105,22 @@ public class LoginWindow extends JFrame implements ActionListener
 			
 			else
 			{
+				//File manager that can read and the users file
 				FileManager f = new FileManager();
+				//The list of users read from the file
 				Users users = f.readFile();
 
-				
+				//If the user doesn't exists it adds it
 				if (!users.userExists(tfUserName.getText()))
 				{
+					//Adds a new user to the list of users in users
 					users.users.add(new User(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())));
+					//Rewrites the file
 					f.writeFile(users);
 					System.out.println("User added");
 				}
 				
+				//If it exists it creates a message box
 				else
 				{
 					JOptionPane.showMessageDialog(null, "User already exists");
@@ -118,11 +128,14 @@ public class LoginWindow extends JFrame implements ActionListener
 			}
 		}
 		
+		//Sign in
 		else if (ae.getSource().equals(btnSignIn) || ae.getSource().equals(tfUserName) || ae.getSource().equals(tfPasswd))
 		{
+			//Debug
 			System.out.println("btnSignIn");
 			System.out.println("username: " + tfUserName.getText() + " password: " + String.valueOf(tfPasswd.getPassword()));
 			
+			//If there are no username or password it will create a message box
 			if (tfUserName.getText().equals("") || String.valueOf(tfPasswd.getPassword()).equals(""))
 			{
 				System.out.println("Username or password empty");
@@ -134,12 +147,16 @@ public class LoginWindow extends JFrame implements ActionListener
 				FileManager f = new FileManager();
 				Users users = f.readFile();
 				
+				//Checks if the user exists and has the correct password
 				if (users.correctPassword(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())))
 				{
+					//Creates a new game
 					MainWindow m = new MainWindow();
+					//Closes this screen
 					dispose();
 				}
 				
+				//If the username or password is invalid.
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Username or password incorrect");
@@ -147,7 +164,7 @@ public class LoginWindow extends JFrame implements ActionListener
 			}
 		}
 	}
-	
+	//Debug
 	public static void main(String[] args)
 	{
 		LoginWindow l = new LoginWindow();
