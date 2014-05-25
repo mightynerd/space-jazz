@@ -7,10 +7,12 @@ public class SpriteShip extends Sprite {
 
 	private final int SHIP_VELOCITY = 200;
 	private List<SpriteLaserBullet> bulletList;
+	private SoundPlayer soundPlayer;
 	
 	public SpriteShip(int startX, int startY) {
 		super(startX, startY);
 		bulletList = new ArrayList<SpriteLaserBullet>();
+		soundPlayer = new SoundPlayer("content\\shoot-1.wav");
 		AddTexture("content\\spaceship-v1.png");
 		AddTexture("content\\spaceship-v1-dmg1.png");
 		AddTexture("content\\spaceship-v1-dmg2.png");
@@ -20,13 +22,30 @@ public class SpriteShip extends Sprite {
 		
 		if (input.IsKeyPressed(InputManager.Key.SpaceBar))
 		{
+			soundPlayer.Reset();
+			soundPlayer.Play();
 			SpriteLaserBullet newBullet = new SpriteLaserBullet((int)GetPosition().X() - 5 + GetWidth() / 2, (int)GetPosition().Y() - 20);
 			bulletList.add(newBullet);
 		}
 		
+		//List of laser sprites that should be removed
+		List<SpriteLaserBullet> toRemove = new ArrayList<SpriteLaserBullet>();
+		
 		for (SpriteLaserBullet laser : bulletList) {
 			laser.Update(delta);
+			
+			//Remove all sprites that are not visible
+			if (laser.GetPosition().Y() < -50)
+			{
+				toRemove.add(laser);
+			}
 		}
+		
+		for (SpriteLaserBullet spriteLaserBullet : toRemove) {
+			bulletList.remove(spriteLaserBullet);
+		}
+		
+		
 		
 		HandleInput(input);
 		super.Update(delta);

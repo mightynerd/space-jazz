@@ -23,6 +23,7 @@ public class AsteroidManager {
 	{
 		currentTime = System.currentTimeMillis();
 		
+		//Spawn evert 500ms
 		if (currentTime - previousTime > 500)
 		{
 			//Spawn new
@@ -33,8 +34,22 @@ public class AsteroidManager {
 			
 		}
 		
+		//List of asteroids that should be removed
+		List<SpriteAsteroid> toRemove = new ArrayList<SpriteAsteroid>();
+		
 		for (SpriteAsteroid asteroid : astList) {
 			asteroid.Update(delta);
+			
+			//Add to remove list if out of view
+			if (asteroid.GetPosition().Y() > MainWindow.WIN_HEIGHT)
+			{
+				toRemove.add(asteroid);
+			}
+		}
+		
+		//Remove out of view asteroids
+		for (SpriteAsteroid asteroid : toRemove) {
+			astList.remove(asteroid);
 		}
 		
 	}

@@ -3,6 +3,8 @@ import java.util.Random;
 
 public class SpriteAsteroid extends Sprite{
 
+	private int health = 100;
+	
 	public SpriteAsteroid(int startX, int startY) {
 		super(startX, startY);
 
@@ -11,6 +13,16 @@ public class SpriteAsteroid extends Sprite{
 		SetDirection(new Vector2D(0, 1f));
 		AddTexture("content\\asteroid-v1.png");
 		
+	}
+	
+	public int GetHealth()
+	{
+		return health;
+	}
+	
+	public void RemoveHealth(int h)
+	{
+		health -= h;
 	}
 
 	@Override

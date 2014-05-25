@@ -133,14 +133,7 @@ public class MainWindow extends JFrame implements Runnable{
 			backStars1.Update(delta);
 			backStars2.Update(delta);
 			
-			astManager.Update(delta);
-			
-			if (inputManager.IsKeyPressed(InputManager.Key.SpaceBar))
-			{
-				System.out.println("SPACE");
-				//ship.SetCurrentTextureIndex(ship.GetCurrentTextureIndex() + 1);
-			}
-			
+			astManager.Update(delta);	
 		}
 	}
 	

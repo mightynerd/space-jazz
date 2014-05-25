@@ -8,7 +8,6 @@
 
 import java.io.*;
 import java.net.URL;
-
 import javax.sound.sampled.*;
 
 
@@ -34,6 +33,12 @@ public class SoundPlayer {
 		{
 			System.out.println("SoundPlayer error: " + ex.getMessage());
 		}
+	}
+	
+	public void Reset()
+	{
+		clip.stop();
+		clip.setFramePosition(0);
 	}
 	
 	public void Play()
