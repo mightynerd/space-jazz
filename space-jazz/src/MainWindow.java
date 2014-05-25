@@ -126,7 +126,7 @@ public class MainWindow extends JFrame implements Runnable{
 		//State specific:
 		if (currentState == StateManager.State.Game)
 		{
-			ship.Update(delta, inputManager);
+			ship.Update(delta, inputManager, astManager.GetAsteroidList());
 			backOverlay.Update(delta);
 			backOverlay2.Update(delta);
 			

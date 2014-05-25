@@ -19,6 +19,11 @@ public class AsteroidManager {
 		r = new Random(1337);
 	}
 	
+	public List<SpriteAsteroid> GetAsteroidList()
+	{
+		return astList;
+	}
+	
 	public void Update(float delta)
 	{
 		currentTime = System.currentTimeMillis();

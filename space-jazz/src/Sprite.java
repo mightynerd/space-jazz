@@ -40,7 +40,15 @@ public class Sprite {
 	
 	public void SetCurrentTextureIndex(int i)
 	{
-		currentTexture = i;
+		if (textures.size() > i)
+		{
+			currentTexture = i;
+		}
+		else
+		{
+			currentTexture = 0;
+		}
+		
 	}
 	
 	public int GetCurrentTextureIndex()

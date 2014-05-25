@@ -18,7 +18,16 @@ public class SpriteShip extends Sprite {
 		AddTexture("content\\spaceship-v1-dmg2.png");
 	}
 
-	public void Update(float delta, InputManager input) {
+	public void Update(float delta, InputManager input, List<SpriteAsteroid> asteroidList) {
+		
+		for (SpriteAsteroid spriteAsteroid : asteroidList) {
+			
+			if (this.Collides(spriteAsteroid))
+			{
+				SetCurrentTextureIndex(GetCurrentTextureIndex() + 1);
+			}
+			
+		}
 		
 		if (input.IsKeyPressed(InputManager.Key.SpaceBar))
 		{
@@ -33,6 +42,14 @@ public class SpriteShip extends Sprite {
 		
 		for (SpriteLaserBullet laser : bulletList) {
 			laser.Update(delta);
+			
+			//Doesnt work??
+			for (SpriteAsteroid asteroid : asteroidList) {
+				if (asteroid.Collides(laser))
+				{
+					toRemove.add(laser);
+				}
+			}
 			
 			//Remove all sprites that are not visible
 			if (laser.GetPosition().Y() < -50)
