@@ -102,12 +102,59 @@ public class Sprite {
 	
 	public boolean Collides(Sprite sprite)
 	{
-		return false; //^^
+		if (collidesX(sprite) && collidesY(sprite))
+		{
+			return true;
+		}
+		
+		else
+		{
+			return false;
+		}
+	}
+	
+	private boolean collidesX(Sprite sprite)
+	{
+		//left corner
+		if (pos.X() <= sprite.GetPosition().X() + sprite.GetWidth() && pos.X() >= sprite.GetPosition().X())
+		{
+			return true;
+		}
+		
+		//right corner
+		else if (pos.X() + width <= sprite.GetPosition().X() + sprite.GetWidth() && pos.X() + width >= sprite.GetPosition().X())
+		{
+			return true;
+		}
+		
+		else
+		{
+			return false;
+		}
+	}
+	
+	private boolean collidesY(Sprite sprite)
+	{
+		//top corner
+		if (pos.Y() <= sprite.GetPosition().Y() + sprite.GetWidth() && pos.Y() >= sprite.GetPosition().Y())
+		{
+			return true;
+		}
+		
+		//bottom corner
+		else if (pos.Y() + width <= sprite.GetPosition().Y() + sprite.GetWidth() && pos.Y() + width >= sprite.GetPosition().Y())
+		{
+			return true;
+		}
+		
+		else
+		{
+			return false;
+		}
 	}
 	
 	public void Draw(Renderer renderer)
 	{
 		renderer.DrawSprite(this);
 	}
-	
 }
