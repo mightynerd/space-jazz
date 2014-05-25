@@ -83,7 +83,7 @@ public class Sprite {
 	{
 		textures.add(new ImageIcon(path));
 		width = textures.get(0).getIconWidth();
-		width = textures.get(0).getIconHeight();
+		height = textures.get(0).getIconHeight();
 	}
 	
 	public void Update(float delta)

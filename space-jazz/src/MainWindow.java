@@ -25,6 +25,7 @@ public class MainWindow extends JFrame implements Runnable{
 	long totalFrames = 0;
 	
 	//Game objects
+	AsteroidManager astManager;
 	Sprite backGround;
 	SpriteBackOverlay backOverlay;
 	SpriteBackOverlay backOverlay2;
@@ -93,6 +94,8 @@ public class MainWindow extends JFrame implements Runnable{
 		stateManager = new StateManager();
 		stateManager.SetState(StateManager.State.Game);
 		
+		astManager = new AsteroidManager();
+		
 		backGround = new Sprite(0, 0);
 		backGround.AddTexture("content\\Space pixel.png");
 		
@@ -130,6 +133,8 @@ public class MainWindow extends JFrame implements Runnable{
 			backStars1.Update(delta);
 			backStars2.Update(delta);
 			
+			astManager.Update(delta);
+			
 			if (inputManager.IsKeyPressed(InputManager.Key.SpaceBar))
 			{
 				System.out.println("SPACE");
@@ -156,6 +161,8 @@ public class MainWindow extends JFrame implements Runnable{
 			backStars2.Draw(renderer);
 			
 			ship.Draw(renderer);
+			
+			astManager.Draw(renderer);
 			
 			backOverlay.Draw(renderer);
 			backOverlay2.Draw(renderer);
