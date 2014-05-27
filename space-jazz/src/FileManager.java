@@ -27,7 +27,7 @@ public class FileManager
 		try
 		{
 			//The file that is going to be written to
-			FileOutputStream usersFile = new FileOutputStream(System.getProperty("user.dir") + "\\users.bin");
+			FileOutputStream usersFile = new FileOutputStream("users.bin");
 			StringWriter sw = new StringWriter();
 			byte[] encXML = null;
 			
