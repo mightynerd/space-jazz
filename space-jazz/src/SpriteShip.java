@@ -6,27 +6,48 @@ import java.util.List;
 public class SpriteShip extends Sprite {
 
 	private final int SHIP_VELOCITY = 200;
+	private int health = 100;
 	private List<SpriteLaserBullet> bulletList;
 	private SoundPlayer soundPlayer;
+	private StateManager stateManager;
 	
-	public SpriteShip(int startX, int startY) {
+	public SpriteShip(int startX, int startY, StateManager stateManager) {
 		super(startX, startY);
+		this.stateManager = stateManager;
 		bulletList = new ArrayList<SpriteLaserBullet>();
-		soundPlayer = new SoundPlayer("content\\shoot-1.wav");
-		AddTexture("content\\spaceship-v1.png");
-		AddTexture("content\\spaceship-v1-dmg1.png");
-		AddTexture("content\\spaceship-v1-dmg2.png");
+		soundPlayer = new SoundPlayer("shoot-1.wav");
+		AddTexture("spaceship-v1.png");
+		AddTexture("spaceship-v1-dmg1.png");
+		AddTexture("spaceship-v1-dmg2.png");
+	}
+	
+	public void RemoveHealth(int rm)
+	{
+		this.health -= rm;
+	}
+	
+	public int GetHeath()
+	{
+		return health;
 	}
 
 	public void Update(float delta, InputManager input, List<SpriteAsteroid> asteroidList) {
 		
+		//List of asteroids to be removed
+		List<SpriteAsteroid> toRemoveAst = new ArrayList<SpriteAsteroid>();
+		
+		//Check for asteroid collision with ship
 		for (SpriteAsteroid spriteAsteroid : asteroidList) {
-			
 			if (this.Collides(spriteAsteroid))
 			{
-				SetCurrentTextureIndex(GetCurrentTextureIndex() + 1);
+				toRemoveAst.add(spriteAsteroid);
+				RemoveHealth(StatTrack.ASTEROID_CRASH_DAMAGE);
 			}
-			
+		}
+		
+		//Remove asteroids
+		for (SpriteAsteroid spriteAsteroid : toRemoveAst) {
+			asteroidList.remove(spriteAsteroid);
 		}
 		
 		if (input.IsKeyPressed(InputManager.Key.SpaceBar))
@@ -40,13 +61,14 @@ public class SpriteShip extends Sprite {
 		//List of laser sprites that should be removed
 		List<SpriteLaserBullet> toRemove = new ArrayList<SpriteLaserBullet>();
 		
+		//Check for asteroidcollision with bullets
 		for (SpriteLaserBullet laser : bulletList) {
 			laser.Update(delta);
 			
-			//Doesnt work??
 			for (SpriteAsteroid asteroid : asteroidList) {
 				if (asteroid.Collides(laser))
 				{
+					asteroid.RemoveHealth(20);
 					toRemove.add(laser);
 				}
 			}
@@ -62,7 +84,10 @@ public class SpriteShip extends Sprite {
 			bulletList.remove(spriteLaserBullet);
 		}
 		
-		
+		if (GetHeath() <= 0)
+		{
+			stateManager.SetState(StateManager.State.EndGame);
+		}
 		
 		HandleInput(input);
 		super.Update(delta);

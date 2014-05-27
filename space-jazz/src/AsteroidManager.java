@@ -50,6 +50,11 @@ public class AsteroidManager {
 			{
 				toRemove.add(asteroid);
 			}
+			
+			if (asteroid.GetHealth() <= 0)
+			{
+				toRemove.add(asteroid);
+			}
 		}
 		
 		//Remove out of view asteroids

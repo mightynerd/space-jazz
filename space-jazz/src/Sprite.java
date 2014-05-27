@@ -1,8 +1,13 @@
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+
+import org.omg.CORBA.Environment;
 
 
 public class Sprite {
@@ -15,8 +20,11 @@ public class Sprite {
 	private Vector2D velocity;
 	private Vector2D direction;
 	
+	private Rectangle spriteRect;
+	
 	public Sprite(int startX, int startY)
 	{
+		spriteRect = new Rectangle();
 		textures = new ArrayList<ImageIcon>();
 		pos = new Vector2D(startX, startY);
 		velocity = new Vector2D(150.0f, 40.0f);
@@ -89,13 +97,23 @@ public class Sprite {
 	
 	public void AddTexture(String path)
 	{
-		textures.add(new ImageIcon(path));
+		textures.add(new ImageIcon("content" + File.separator + path));
 		width = textures.get(0).getIconWidth();
 		height = textures.get(0).getIconHeight();
 	}
 	
+	public Rectangle GetRectangle()
+	{
+		return spriteRect;
+	}
+	
 	public void Update(float delta)
 	{
+		spriteRect.x = (int)pos.X();
+		spriteRect.y = (int)pos.Y();
+		spriteRect.width = width;
+		spriteRect.height = height;
+		
 		Vector2D newPos = pos.GetVector();
 		Vector2D modPos = direction.GetVector();
 		modPos.Multiply(velocity);
@@ -110,56 +128,9 @@ public class Sprite {
 	
 	public boolean Collides(Sprite sprite)
 	{
-		if (collidesX(sprite) && collidesY(sprite))
-		{
-			return true;
-		}
-		
-		else
-		{
-			return false;
-		}
+		return spriteRect.intersects(sprite.GetRectangle());
 	}
-	
-	private boolean collidesX(Sprite sprite)
-	{
-		//left corner
-		if (pos.X() <= sprite.GetPosition().X() + sprite.GetWidth() && pos.X() >= sprite.GetPosition().X())
-		{
-			return true;
-		}
-		
-		//right corner
-		else if (pos.X() + width <= sprite.GetPosition().X() + sprite.GetWidth() && pos.X() + width >= sprite.GetPosition().X())
-		{
-			return true;
-		}
-		
-		else
-		{
-			return false;
-		}
-	}
-	
-	private boolean collidesY(Sprite sprite)
-	{
-		//top corner
-		if (pos.Y() <= sprite.GetPosition().Y() + sprite.GetWidth() && pos.Y() >= sprite.GetPosition().Y())
-		{
-			return true;
-		}
-		
-		//bottom corner
-		else if (pos.Y() + width <= sprite.GetPosition().Y() + sprite.GetWidth() && pos.Y() + width >= sprite.GetPosition().Y())
-		{
-			return true;
-		}
-		
-		else
-		{
-			return false;
-		}
-	}
+
 	
 	public void Draw(Renderer renderer)
 	{

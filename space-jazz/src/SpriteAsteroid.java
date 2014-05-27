@@ -11,7 +11,9 @@ public class SpriteAsteroid extends Sprite{
 		Random r = new Random();
 		SetVelocity(new Vector2D(0, r.nextInt(100) + 100));
 		SetDirection(new Vector2D(0, 1f));
-		AddTexture("content\\asteroid-v1.png");
+		AddTexture("asteroid-v1.png");
+		AddTexture("Asteroid-v1-dmg1.png");
+		AddTexture("Asteroid-v1-dmg2.png");
 		
 	}
 	
@@ -27,7 +29,14 @@ public class SpriteAsteroid extends Sprite{
 
 	@Override
 	public void Update(float delta) {
-		// TODO Auto-generated method stub
+		if (GetHealth() < 66 && GetHealth() > 33)
+		{
+			SetCurrentTextureIndex(1);
+		}
+		else if (GetHealth() < 33)
+		{
+			SetCurrentTextureIndex(2);
+		}
 		super.Update(delta);
 	}
 

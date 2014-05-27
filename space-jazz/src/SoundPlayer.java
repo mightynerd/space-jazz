@@ -23,7 +23,7 @@ public class SoundPlayer {
 	{
 		try
 		{
-			audioStream = AudioSystem.getAudioInputStream(new File(path));
+			audioStream = AudioSystem.getAudioInputStream(new File("content" + File.separator + path));
 			audioFormat = audioStream.getFormat();
 			info = new DataLine.Info(Clip.class, audioFormat);
 			clip = (Clip)AudioSystem.getLine(info);

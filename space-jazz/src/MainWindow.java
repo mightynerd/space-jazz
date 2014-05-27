@@ -97,21 +97,21 @@ public class MainWindow extends JFrame implements Runnable{
 		astManager = new AsteroidManager();
 		
 		backGround = new Sprite(0, 0);
-		backGround.AddTexture("content\\Space pixel.png");
+		backGround.AddTexture("Space pixel.png");
 		
 		backOverlay = new SpriteBackOverlay(0, -720);
 		backOverlay2 = new SpriteBackOverlay(0, -2160);
-		backOverlay.AddTexture("content\\nebula-repeat-v2.png");
-		backOverlay2.AddTexture("content\\nebula-repeat-v2.png");
+		backOverlay.AddTexture("nebula-repeat-v2.png");
+		backOverlay2.AddTexture("nebula-repeat-v2.png");
 		
 		backStars1 = new SpriteBackOverlay(0, -720);
 		backStars2 = new SpriteBackOverlay(0, -2160);
-		backStars1.AddTexture("content\\Transparant-star.png");
-		backStars2.AddTexture("content\\Transparant-star.png");
+		backStars1.AddTexture("Transparant-star.png");
+		backStars2.AddTexture("Transparant-star.png");
 		backStars1.SetVelocity(new Vector2D(0f, 100f));
 		backStars2.SetVelocity(new Vector2D(0f, 100f));
 		
-		ship = new SpriteShip(500, 600);
+		ship = new SpriteShip(500, 600, stateManager);
 		
 	}
 	
