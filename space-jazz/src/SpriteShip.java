@@ -8,14 +8,16 @@ public class SpriteShip extends Sprite {
 	private final int SHIP_VELOCITY = 200;
 	private int health = 100;
 	private List<SpriteLaserBullet> bulletList;
-	private SoundPlayer soundPlayer;
+	private SoundPlayer soundPlayerShoot;
+	private SoundPlayer soundPlayerDamage;
 	private StateManager stateManager;
 	
 	public SpriteShip(int startX, int startY, StateManager stateManager) {
 		super(startX, startY);
 		this.stateManager = stateManager;
 		bulletList = new ArrayList<SpriteLaserBullet>();
-		soundPlayer = new SoundPlayer("shoot-1.wav");
+		soundPlayerShoot = new SoundPlayer("shoot-1.wav");
+		soundPlayerDamage = new SoundPlayer("damage-1.wav");
 		AddTexture("spaceship-v1.png");
 		AddTexture("spaceship-v1-dmg1.png");
 		AddTexture("spaceship-v1-dmg2.png");
@@ -41,6 +43,8 @@ public class SpriteShip extends Sprite {
 			if (this.Collides(spriteAsteroid))
 			{
 				toRemoveAst.add(spriteAsteroid);
+				soundPlayerDamage.Reset();
+				soundPlayerDamage.Play();
 				RemoveHealth(StatTrack.ASTEROID_CRASH_DAMAGE);
 			}
 		}
@@ -52,8 +56,8 @@ public class SpriteShip extends Sprite {
 		
 		if (input.IsKeyPressed(InputManager.Key.SpaceBar))
 		{
-			soundPlayer.Reset();
-			soundPlayer.Play();
+			soundPlayerShoot.Reset();
+			soundPlayerShoot.Play();
 			SpriteLaserBullet newBullet = new SpriteLaserBullet((int)GetPosition().X() - 5 + GetWidth() / 2, (int)GetPosition().Y() - 20);
 			bulletList.add(newBullet);
 		}

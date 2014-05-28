@@ -110,7 +110,7 @@ public class MainWindow extends JFrame implements Runnable{
 	{
 		test = new MenuButton(30, 30, "Play");
 		stateManager = new StateManager();
-		stateManager.SetState(StateManager.State.MainMenu);
+		stateManager.SetState(StateManager.State.Game);
 		
 		astManager = new AsteroidManager();
 		
