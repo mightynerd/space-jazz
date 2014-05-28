@@ -1,10 +1,16 @@
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
 
 
 public class MainWindow extends JFrame implements Runnable{
@@ -34,8 +40,19 @@ public class MainWindow extends JFrame implements Runnable{
 	SpriteBackOverlay backStars2;
 	SpriteShip ship;
 	
+	MenuButton test;
+	
 	public MainWindow()
 	{
+		//Load font
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		try {
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("content" + File.separator + "04B_03__.TTF")));
+		} catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		//-----
+		
 		this.setSize(WIN_WIDTH, WIN_HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -91,8 +108,9 @@ public class MainWindow extends JFrame implements Runnable{
 	
 	public void Init()
 	{
+		test = new MenuButton(30, 30, "Play");
 		stateManager = new StateManager();
-		stateManager.SetState(StateManager.State.Game);
+		stateManager.SetState(StateManager.State.MainMenu);
 		
 		astManager = new AsteroidManager();
 		
@@ -135,6 +153,10 @@ public class MainWindow extends JFrame implements Runnable{
 			
 			astManager.Update(delta);	
 		}
+		else if (currentState == StateManager.State.MainMenu)
+		{
+			test.Update(delta);
+		}
 	}
 	
 	public void Draw()
@@ -159,6 +181,10 @@ public class MainWindow extends JFrame implements Runnable{
 			
 			backOverlay.Draw(renderer);
 			backOverlay2.Draw(renderer);
+		}
+		else if (currentState == StateManager.State.MainMenu)
+		{
+			test.Draw(renderer);
 		}
 		
 		
