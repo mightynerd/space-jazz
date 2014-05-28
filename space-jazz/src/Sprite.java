@@ -98,8 +98,8 @@ public class Sprite {
 	public void AddTexture(String path)
 	{
 		textures.add(new ImageIcon("content" + File.separator + path));
-		width = textures.get(0).getIconWidth();
-		height = textures.get(0).getIconHeight();
+		//width = textures.get(0).getIconWidth();
+		//height = textures.get(0).getIconHeight();
 	}
 	
 	public Rectangle GetRectangle()
@@ -109,6 +109,9 @@ public class Sprite {
 	
 	public void Update(float delta)
 	{
+		width = textures.get(currentTexture).getIconWidth();
+		height = textures.get(currentTexture).getIconHeight();
+		
 		spriteRect.x = (int)pos.X();
 		spriteRect.y = (int)pos.Y();
 		spriteRect.width = width;
