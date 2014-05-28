@@ -51,4 +51,17 @@ public class Users
 		}
 		return false;
 	}
+	
+	User getUser(String name)
+	{
+		for (User user : users)
+		{
+			if (user.userName == name)
+			{
+				return user;
+			}
+		}
+		
+		return new User();
+	}
 }

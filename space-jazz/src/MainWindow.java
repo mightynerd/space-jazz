@@ -42,7 +42,7 @@ public class MainWindow extends JFrame implements Runnable{
 	
 	MenuButton test;
 	
-	public MainWindow()
+	public MainWindow(User user)
 	{
 		//Load font
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

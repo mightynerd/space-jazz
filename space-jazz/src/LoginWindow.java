@@ -151,7 +151,7 @@ public class LoginWindow extends JFrame implements ActionListener
 				if (users.correctPassword(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())))
 				{
 					//Creates a new game
-					MainWindow m = new MainWindow();
+					MainWindow m = new MainWindow(users.getUser(tfUserName.getText()));
 					//Closes this screen
 					dispose();
 				}
