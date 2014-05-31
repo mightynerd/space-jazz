@@ -16,6 +16,11 @@ public class MenuButton extends Sprite {
 		AddTexture("menu-button-deactive.png");
 		AddTexture("menu-button-active.png");
 	}
+	
+	public String GetText()
+	{
+		return text;
+	}
 
 	public void SetActive(boolean active)
 	{

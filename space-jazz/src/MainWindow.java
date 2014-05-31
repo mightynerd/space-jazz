@@ -18,6 +18,8 @@ public class MainWindow extends JFrame implements Runnable{
 	public static final int WIN_WIDTH = 1280;
 	public static final int WIN_HEIGHT = 720;
 	
+	public static final StateManager.State DEFAULT_STATE = StateManager.State.MainMenu;
+	
 	//Used components
 	private InputManager inputManager;
 	private Thread gameThread;
@@ -40,7 +42,7 @@ public class MainWindow extends JFrame implements Runnable{
 	SpriteBackOverlay backStars2;
 	SpriteShip ship;
 	
-	MenuButton test;
+	MainMenu mainMenu;
 	
 	public MainWindow(User user)
 	{
@@ -107,10 +109,11 @@ public class MainWindow extends JFrame implements Runnable{
 	}
 	
 	public void Init()
-	{
-		test = new MenuButton(30, 30, "Play");
+	{		
 		stateManager = new StateManager();
-		stateManager.SetState(StateManager.State.Game);
+		stateManager.SetState(DEFAULT_STATE);
+		
+		mainMenu = new MainMenu(stateManager);
 		
 		astManager = new AsteroidManager();
 		
@@ -152,10 +155,15 @@ public class MainWindow extends JFrame implements Runnable{
 			backStars2.Update(delta);
 			
 			astManager.Update(delta);	
+			
+			if (inputManager.IsKeyPressed(inputManager.DEFAULT_BACK))
+			{
+				stateManager.SetState(StateManager.State.MainMenu);
+			}
 		}
 		else if (currentState == StateManager.State.MainMenu)
 		{
-			test.Update(delta);
+			mainMenu.Update(inputManager);
 		}
 	}
 	
@@ -184,7 +192,7 @@ public class MainWindow extends JFrame implements Runnable{
 		}
 		else if (currentState == StateManager.State.MainMenu)
 		{
-			test.Draw(renderer);
+			mainMenu.Draw(renderer);
 		}
 		
 		

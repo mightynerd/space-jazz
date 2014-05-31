@@ -10,6 +10,7 @@ public class SpriteShip extends Sprite {
 	private List<SpriteLaserBullet> bulletList;
 	private SoundPlayer soundPlayerShoot;
 	private SoundPlayer soundPlayerDamage;
+	private SoundPlayer soundAsteroidDamage;
 	private StateManager stateManager;
 	
 	public SpriteShip(int startX, int startY, StateManager stateManager) {
@@ -18,6 +19,7 @@ public class SpriteShip extends Sprite {
 		bulletList = new ArrayList<SpriteLaserBullet>();
 		soundPlayerShoot = new SoundPlayer("shoot-1.wav");
 		soundPlayerDamage = new SoundPlayer("damage-1.wav");
+		soundAsteroidDamage = new SoundPlayer("asteroid-damage-1.wav");
 		AddTexture("spaceship-v1.png");
 		AddTexture("spaceship-v1-dmg1.png");
 		AddTexture("spaceship-v1-dmg2.png");
@@ -54,7 +56,7 @@ public class SpriteShip extends Sprite {
 			asteroidList.remove(spriteAsteroid);
 		}
 		
-		if (input.IsKeyPressed(InputManager.Key.SpaceBar))
+		if (input.IsKeyPressed(InputManager.DEFAULT_SHOOT))
 		{
 			soundPlayerShoot.Reset();
 			soundPlayerShoot.Play();
@@ -74,6 +76,9 @@ public class SpriteShip extends Sprite {
 				{
 					asteroid.RemoveHealth(20);
 					toRemove.add(laser);
+					//Play sound effect
+					soundAsteroidDamage.Reset();
+					soundAsteroidDamage.Play();
 				}
 			}
 			
@@ -109,12 +114,12 @@ public class SpriteShip extends Sprite {
 
 	private void HandleInput(InputManager input)
 	{
-		if (input.IsKeyDown(InputManager.Key.ArrowLeft) && GetPosition().X() > 0)
+		if (input.IsKeyDown(InputManager.DEFAULT_LEFT) && GetPosition().X() > 0)
 		{
 			SetVelocity(new Vector2D(SHIP_VELOCITY, GetVelocity().Y()));
 			SetDirection(new Vector2D(-1f, GetDirection().Y()));
 		}
-		else if (input.IsKeyDown(InputManager.Key.ArrowRight) && GetPosition().X() < (MainWindow.WIN_WIDTH - GetWidth()))
+		else if (input.IsKeyDown(InputManager.DEFAULT_RIGHT) && GetPosition().X() < (MainWindow.WIN_WIDTH - GetWidth()))
 		{
 			SetVelocity(new Vector2D(SHIP_VELOCITY, GetVelocity().Y()));
 			SetDirection(new Vector2D(1f, GetDirection().Y()));
@@ -126,12 +131,12 @@ public class SpriteShip extends Sprite {
 		}
 		//-----
 		
-		if (input.IsKeyDown(InputManager.Key.ArrowDown) && GetPosition().Y() < (MainWindow.WIN_HEIGHT - GetHeight()))
+		if (input.IsKeyDown(InputManager.DEFAULT_DOWN) && GetPosition().Y() < (MainWindow.WIN_HEIGHT - GetHeight()))
 		{
 			SetVelocity(new Vector2D(GetVelocity().X(), SHIP_VELOCITY));
 			SetDirection(new Vector2D(GetDirection().X(), 1f));
 		}
-		else if (input.IsKeyDown(InputManager.Key.ArrowUp) && GetPosition().Y() > 24)
+		else if (input.IsKeyDown(InputManager.DEFAULT_UP) && GetPosition().Y() > 24)
 		{
 			SetVelocity(new Vector2D(GetVelocity().X(), SHIP_VELOCITY));
 			SetDirection(new Vector2D(GetDirection().X(), -1f));

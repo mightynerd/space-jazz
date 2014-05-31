@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 public class SpaceJazz {
 	
 	public static void main(String[] args) {
-		MainWindow w = new MainWindow();
+		MainWindow w = new MainWindow(new User());
 	}
 
 }

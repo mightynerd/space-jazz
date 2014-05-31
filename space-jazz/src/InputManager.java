@@ -11,16 +11,48 @@ import java.awt.event.KeyListener;
 
 public class InputManager implements KeyListener{
 
+	//Controls
+	public static final Key DEFAULT_ACCEPT = Key.Enter;
+	public static final Key DEFAULT_UP = Key.W;
+	public static final Key DEFAULT_DOWN = Key.S;
+	public static final Key DEFAULT_RIGHT = Key.D;
+	public static final Key DEFAULT_LEFT = Key.A;
+	public static final Key DEFAULT_SHOOT = Key.ArrowUp;
+	public static final Key DEFAULT_BACK = Key.Escape;
+	
+	//Boolean values for each supported key
 	private boolean preRightArrow = false;
 	private boolean rightArrow = false;
+	
 	private boolean preLeftArrow = false;
 	private boolean leftArrow = false;
+	
 	private boolean preUpArrow = false;
 	private boolean upArrow = false;
+	
 	private boolean preDownArrow = false;
 	private boolean downArrow = false;
+	
 	private boolean preSpaceBar = false;
 	private boolean spaceBar = false;
+	
+	private boolean preEscape = false;
+	private boolean escape = false;
+	
+	private boolean preEnter = false;
+	private boolean enter = false;
+	
+	private boolean preW = false;
+	private boolean w = false;
+	
+	private boolean preA = false;
+	private boolean a = false;
+	
+	private boolean preS = false;
+	private boolean s = false;
+	
+	private boolean preD = false;
+	private boolean d = false;
 	
 	//Supported keys:
 	public static enum Key
@@ -29,7 +61,13 @@ public class InputManager implements KeyListener{
 		ArrowLeft,
 		ArrowUp,
 		ArrowDown,
-		SpaceBar
+		SpaceBar,
+		Escape,
+		Enter,
+		W,
+		A,
+		S,
+		D
 	}
 	
 	public InputManager()
@@ -96,6 +134,72 @@ public class InputManager implements KeyListener{
 				return false;
 			}
 			
+		case Enter:
+			if (enter == true && preEnter == false)
+			{
+				preEnter = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
+		case Escape:
+			if (escape == true && preEscape == false)
+			{
+				preEscape = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
+		case W:
+			if (w == true && preW == false)
+			{
+				preW = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
+		case A:
+			if (a == true && preA == false)
+			{
+				preA = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
+		case S:
+			if (s == true && preS == false)
+			{
+				preS = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
+		case D:
+			if (d == true && preD == false)
+			{
+				preD = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
 		default:
 			return false;
 		}
@@ -118,6 +222,24 @@ public class InputManager implements KeyListener{
 			
 		case SpaceBar:
 			return spaceBar;
+			
+		case Enter:
+			return enter;
+			
+		case Escape:
+			return escape;
+			
+		case W:
+			return w;
+			
+		case A:
+			return a;
+			
+		case S:
+			return s;
+			
+		case D:
+			return d;
 			
 		default:
 			return false;
@@ -152,6 +274,31 @@ public class InputManager implements KeyListener{
 		{
 			spaceBar = true;
 		}
+		else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			enter = true;
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			escape = true;
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_W)
+		{
+			w = true;
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_A)
+		{
+			a = true;
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_S)
+		{
+			s = true;
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_D)
+		{
+			d = true;
+		}
+		
 		
 	}
 
@@ -187,6 +334,31 @@ public class InputManager implements KeyListener{
 		{
 			spaceBar = false;
 			preSpaceBar = false;
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			escape = false;
+			preEscape = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			enter = false;
+			preEnter = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_W)
+		{
+			w = false;
+			preW = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_A)
+		{
+			a = false;
+			preA = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_S)
+		{
+			s = false;
+			preS = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_D)
+		{
+			d = false;
+			preD = false;
 		}
 		
 	}

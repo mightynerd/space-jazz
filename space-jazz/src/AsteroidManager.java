@@ -13,10 +13,13 @@ public class AsteroidManager {
 	
 	private List<SpriteAsteroid> astList;
 	
+	SoundPlayer soundAsteroidDestoyed;
+	
 	public AsteroidManager()
 	{
 		astList = new ArrayList<SpriteAsteroid>();
 		r = new Random(1337);
+		soundAsteroidDestoyed = new SoundPlayer("asteroid-destroyed-1.wav");
 	}
 	
 	public List<SpriteAsteroid> GetAsteroidList()
@@ -54,6 +57,9 @@ public class AsteroidManager {
 			if (asteroid.GetHealth() <= 0)
 			{
 				toRemove.add(asteroid);
+				//Play sound effect
+				soundAsteroidDestoyed.Reset();
+				soundAsteroidDestoyed.Play();
 			}
 		}
 		
