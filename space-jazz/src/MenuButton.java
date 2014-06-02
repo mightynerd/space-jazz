@@ -4,7 +4,7 @@ import java.awt.Font;
 
 public class MenuButton extends Sprite {
 
-	private boolean selected;
+	private boolean selected = true;
 	private String text;
 	
 	public MenuButton(int x, int y, String text)
