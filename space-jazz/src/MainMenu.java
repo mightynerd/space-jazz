@@ -57,6 +57,10 @@ public class MainMenu {
 			{
 				stateManager.SetState(StateManager.State.Game);
 			}
+			else if (listButtons.get(selectedIndex).GetText() == "Store")
+			{
+				stateManager.SetState(StateManager.State.ShopMenu);
+			}
 			else if (listButtons.get(selectedIndex).GetText() == "Exit")
 			{
 				System.exit(0);

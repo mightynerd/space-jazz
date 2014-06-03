@@ -6,6 +6,7 @@ public class StateManager {
 		Intro,
 		MainMenu,
 		Tutorial,
+		ShopMenu,
 		Game,
 		EndGame,
 		Exit

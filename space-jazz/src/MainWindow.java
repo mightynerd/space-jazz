@@ -32,6 +32,9 @@ public class MainWindow extends JFrame implements Runnable{
 	int framerate = 0;
 	long totalFrames = 0;
 	
+	//Current user
+	User currentUser;
+	
 	//Game objects
 	AsteroidManager astManager;
 	Sprite backGround;
@@ -43,6 +46,8 @@ public class MainWindow extends JFrame implements Runnable{
 	SpriteShip ship;
 	
 	MainMenu mainMenu;
+	ShopMenu shopMenu;
+	SpriteHud hud;
 	
 	public MainWindow(User user)
 	{
@@ -59,6 +64,7 @@ public class MainWindow extends JFrame implements Runnable{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLocation(40, 40);
+		this.setTitle("space-jazz");
 		
 		inputManager = new InputManager();
 		this.addKeyListener(inputManager);
@@ -66,6 +72,7 @@ public class MainWindow extends JFrame implements Runnable{
 		this.setVisible(true);
 		
 		renderer = new Renderer(WIN_WIDTH, WIN_HEIGHT);
+		currentUser = user;
 		
 		//SwingUtilities.invokeLater(this);
 		gameThread = new Thread(this);
@@ -114,8 +121,9 @@ public class MainWindow extends JFrame implements Runnable{
 		stateManager.SetState(DEFAULT_STATE);
 		
 		mainMenu = new MainMenu(stateManager);
+		shopMenu = new ShopMenu(stateManager, currentUser);
 		
-		astManager = new AsteroidManager();
+		astManager = new AsteroidManager(currentUser);
 		
 		backGround = new Sprite(0, 0);
 		backGround.AddTexture("Space pixel.png");
@@ -132,7 +140,8 @@ public class MainWindow extends JFrame implements Runnable{
 		backStars1.SetVelocity(new Vector2D(0f, 100f));
 		backStars2.SetVelocity(new Vector2D(0f, 100f));
 		
-		ship = new SpriteShip(500, 600, stateManager);
+		ship = new SpriteShip(500, 600, stateManager, currentUser);
+		hud = new SpriteHud(0, 0, currentUser);
 		
 	}
 	
@@ -165,6 +174,10 @@ public class MainWindow extends JFrame implements Runnable{
 		{
 			mainMenu.Update(inputManager);
 		}
+		else if (currentState == StateManager.State.ShopMenu)
+		{
+			shopMenu.Update(inputManager);
+		}
 	}
 	
 	public void Draw()
@@ -189,14 +202,20 @@ public class MainWindow extends JFrame implements Runnable{
 			
 			backOverlay.Draw(renderer);
 			backOverlay2.Draw(renderer);
+			
+			hud.Draw(renderer);
 		}
 		else if (currentState == StateManager.State.MainMenu)
 		{
 			mainMenu.Draw(renderer);
 		}
+		else if (currentState == StateManager.State.ShopMenu)
+		{
+			shopMenu.Draw(renderer);
+		}
 		
 		
-		renderer.DrawString("Framerate: " + framerate, 20, 700, Color.GREEN);
+		renderer.DrawString("Framerate: " + framerate, 20, 700, Color.GREEN, 20);
 		//--- End draw
 		
 		//Draw backbuffer

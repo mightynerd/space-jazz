@@ -12,9 +12,11 @@ public class SpriteShip extends Sprite {
 	private SoundPlayer soundPlayerDamage;
 	private SoundPlayer soundAsteroidDamage;
 	private StateManager stateManager;
+	private User user;
 	
-	public SpriteShip(int startX, int startY, StateManager stateManager) {
+	public SpriteShip(int startX, int startY, StateManager stateManager, User user) {
 		super(startX, startY);
+		this.user = user;
 		this.stateManager = stateManager;
 		bulletList = new ArrayList<SpriteLaserBullet>();
 		soundPlayerShoot = new SoundPlayer("shoot-1.wav");
@@ -47,7 +49,7 @@ public class SpriteShip extends Sprite {
 				toRemoveAst.add(spriteAsteroid);
 				soundPlayerDamage.Reset();
 				soundPlayerDamage.Play();
-				RemoveHealth(StatTrack.ASTEROID_CRASH_DAMAGE);
+				RemoveHealth(StatTrack.ASTEROID_CRASH_DAMAGE * (1 / user.armorLevel));
 			}
 		}
 		
@@ -74,11 +76,14 @@ public class SpriteShip extends Sprite {
 			for (SpriteAsteroid asteroid : asteroidList) {
 				if (asteroid.Collides(laser))
 				{
-					asteroid.RemoveHealth(20);
+					asteroid.RemoveHealth(20 * user.weaponLevel); //20 * weaponlevel (1 default)
 					toRemove.add(laser);
 					//Play sound effect
 					soundAsteroidDamage.Reset();
 					soundAsteroidDamage.Play();
+					//Stats:
+					user.points += 1; 
+					user.money += 1;
 				}
 			}
 			
@@ -100,6 +105,9 @@ public class SpriteShip extends Sprite {
 		
 		HandleInput(input);
 		super.Update(delta);
+		
+		//Stats:
+		user.currentHealth = GetHeath();
 	}
 	
 	@Override

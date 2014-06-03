@@ -14,9 +14,11 @@ public class AsteroidManager {
 	private List<SpriteAsteroid> astList;
 	
 	SoundPlayer soundAsteroidDestoyed;
+	private User user;
 	
-	public AsteroidManager()
+	public AsteroidManager(User user)
 	{
+		this.user = user;
 		astList = new ArrayList<SpriteAsteroid>();
 		r = new Random(1337);
 		soundAsteroidDestoyed = new SoundPlayer("asteroid-destroyed-1.wav");
@@ -60,6 +62,10 @@ public class AsteroidManager {
 				//Play sound effect
 				soundAsteroidDestoyed.Reset();
 				soundAsteroidDestoyed.Play();
+				
+				//Update stats:
+				user.points += 10;
+				user.money += 10;
 			}
 		}
 		

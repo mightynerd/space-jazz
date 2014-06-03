@@ -46,6 +46,11 @@ public class Sprite {
 		return textures.get(currentTexture).getImage();
 	}
 	
+	public boolean HasTexture()
+	{
+		return textures.size() > 0;
+	}
+	
 	public void SetCurrentTextureIndex(int i)
 	{
 		if (textures.size() > i)

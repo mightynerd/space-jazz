@@ -11,7 +11,7 @@ public class Renderer {
 	Graphics g;
 	
 	private final Color CLEAR_COLOR = Color.BLACK;
-	private final Font DEFAULT_FONT = new Font("Courier New", 1, 16);
+	private final Font DEFAULT_FONT = new Font("04b03", 10, 30);
 	
 	public Renderer(int width, int height)
 	{
@@ -28,7 +28,10 @@ public class Renderer {
 	public void DrawSprite(Sprite sprite)
 	{
 		g.setColor(Color.WHITE);
-		g.drawImage(sprite.GetTexture(), sprite.GetPosition().IntX(), sprite.GetPosition().IntY(), null);
+		if (sprite.HasTexture())
+		{
+			g.drawImage(sprite.GetTexture(), sprite.GetPosition().IntX(), sprite.GetPosition().IntY(), null);
+		}
 	}
 	
 	public void DrawString(String text, Font font, Vector2D pos, Color color)
@@ -46,6 +49,11 @@ public class Renderer {
 	public void DrawString(String text, int x, int y, Color color)
 	{
 		DrawString(text, DEFAULT_FONT, new Vector2D(x, y), color);
+	}
+	
+	public void DrawString(String text, int x, int y, Color color, int size)
+	{
+		DrawString(text, new Font(DEFAULT_FONT.getName(), 10, size), new Vector2D(x, y), color);
 	}
 	
 	public BufferedImage GetBackBuffer()

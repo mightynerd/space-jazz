@@ -53,4 +53,9 @@ public class Vector2D {
 		return new Vector2D(this.x,  this.y);
 	}
 	
+	public static Vector2D Zero()
+	{
+		return new Vector2D(0, 0);
+	}
+	
 }
