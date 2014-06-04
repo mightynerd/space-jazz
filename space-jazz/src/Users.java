@@ -20,7 +20,7 @@ public class Users
 	public List<User> users = new ArrayList<User>();
 	
 	//Checks if a user exists
-	Boolean userExists(String name)
+	boolean userExists(String name)
 	{
 		//Loops through all users in the list
 		for (User user : users)
@@ -35,7 +35,7 @@ public class Users
 	}
 	
 	//Checks if the user exists and if it has the correct password
-	Boolean correctPassword(String name, String pass)
+	boolean correctPassword(String name, String pass)
 	{
 		for (User user : users)
 		{
@@ -56,12 +56,13 @@ public class Users
 	{
 		for (User user : users)
 		{
-			if (user.userName == name)
+			System.out.println(user.userName + name);
+			if (user.userName.equals(name))
 			{
 				return user;
 			}
 		}
 		
-		return new User();
+		return new User("Invalid user", "invalid");
 	}
 }
