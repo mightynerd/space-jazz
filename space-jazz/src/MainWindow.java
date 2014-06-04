@@ -1,8 +1,14 @@
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.DisplayMode;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -51,10 +57,13 @@ public class MainWindow extends JFrame implements Runnable{
 	GameOverMenu gameOverMenu;
 	SpriteHud hud;
 	
+    GraphicsEnvironment env;
+    GraphicsDevice device;
+    DisplayMode dm;
+	 
 	public MainWindow(User user)
 	{
 		setUndecorated(true);
-		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 		
 		//Load font
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -64,17 +73,32 @@ public class MainWindow extends JFrame implements Runnable{
 			e.printStackTrace();
 		}
 		//-----
+		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		device = env.getScreenDevices()[0];
+		dm = new DisplayMode(WIN_WIDTH, WIN_HEIGHT, device.getDisplayMode().getBitDepth(), device.getDisplayMode().getRefreshRate());
 		
-		this.setSize(WIN_WIDTH, WIN_HEIGHT);
+		try
+		{
+		    Toolkit toolkit = Toolkit.getDefaultToolkit();
+		    Point hotSpot = new Point(0,0);
+		    BufferedImage cursorImage = new BufferedImage(1, 1, BufferedImage.TRANSLUCENT); 
+		    Cursor invisibleCursor = toolkit.createCustomCursor(cursorImage, hotSpot, "InvisibleCursor");        
+		    setCursor(invisibleCursor);
+		}
+		
+		catch (Exception ex)
+		{
+			this.setSize(WIN_WIDTH, WIN_HEIGHT);
+		}
+		
+		device.setFullScreenWindow(this);
+		device.setDisplayMode(dm);
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setLocation(40, 40);
-		this.setTitle("space-jazz");
 		
 		inputManager = new InputManager();
 		this.addKeyListener(inputManager);
-		
-		this.setVisible(true);
 		
 		renderer = new Renderer(WIN_WIDTH, WIN_HEIGHT);
 		currentUser = user;
@@ -92,6 +116,8 @@ public class MainWindow extends JFrame implements Runnable{
 		
 		while(true)
 		{
+			this.requestFocusInWindow();
+			
 			totalFrames++;
 			currentTime = System.nanoTime();
 			
