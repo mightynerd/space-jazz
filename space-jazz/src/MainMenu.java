@@ -8,6 +8,9 @@ public class MainMenu {
 	private List<MenuButton> listButtons;
 	private int selectedIndex = 0;
 	
+	SoundPlayer soundGameMusic;
+	SoundPlayer soundMenuMusic;
+	
 	StateManager stateManager;
 	
 	//Background
@@ -16,6 +19,9 @@ public class MainMenu {
 	public MainMenu(StateManager stateMan)
 	{
 		this.stateManager = stateMan;
+		
+		soundGameMusic = new SoundPlayer("game.wav");
+		soundMenuMusic = new SoundPlayer("menu.wav");
 		
 		listButtons = new ArrayList<MenuButton>();
 		listButtons.add(new MenuButton(100, 100, "Play"));
@@ -27,6 +33,8 @@ public class MainMenu {
 		
 		backGround = new Sprite(0, 0);
 		backGround.AddTexture("Space pixel.png");
+		
+		soundMenuMusic.Play();
 	}
 	
 	public void Update(InputManager inputManager)
@@ -55,6 +63,8 @@ public class MainMenu {
 			//Action for each button
 			if (listButtons.get(selectedIndex).GetText() == "Play")
 			{
+				soundMenuMusic.Stop();
+				soundGameMusic.Play();
 				stateManager.SetState(StateManager.State.Game);
 			}
 			else if (listButtons.get(selectedIndex).GetText() == "Store")
