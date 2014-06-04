@@ -6,13 +6,16 @@ public class MenuButton extends Sprite {
 
 	private boolean selected = false;
 	private String text;
+	private int size;
+	private Vector2D textPos = new Vector2D(80, 60);
 	
-	public MenuButton(int x, int y, String text)
+	public MenuButton(int x, int y, String text, int size)
 	{
 		super(x, y);
 		SetVelocity(new Vector2D(0, 0));
 		SetDirection(new Vector2D(0, 0));
 		this.text = text;
+		this.size = size;
 		AddTexture("menu-button-deactive.png");
 		AddTexture("menu-button-active.png");
 	}
@@ -20,6 +23,11 @@ public class MenuButton extends Sprite {
 	public String GetText()
 	{
 		return text;
+	}
+	
+	public void SetTextPos(Vector2D textPos)
+	{
+		this.textPos = textPos;
 	}
 
 	public void SetActive(boolean active)
@@ -45,8 +53,8 @@ public class MenuButton extends Sprite {
 	@Override
 	public void Draw(Renderer renderer) {
 		super.Draw(renderer);
-		renderer.DrawString(text, new Font("04b03", 10, 40), 
-				new Vector2D(GetPosition().X() + 80, GetPosition().Y() + 60), Color.WHITE);
+		renderer.DrawString(text, new Font("04b03", 10, size), 
+				new Vector2D(GetPosition().X() + textPos.X(), GetPosition().Y() + textPos.Y()), Color.WHITE);
 	}
 	
 }

@@ -26,12 +26,21 @@ public class MainMenu {
 		soundGameMusic = new SoundPlayer("game.wav");
 		soundMenuMusic = new SoundPlayer("menu.wav");
 		
+		//List of buttons
 		listButtons = new ArrayList<MenuButton>();
-		listButtons.add(new MenuButton(100, 100, "Play"));
-		listButtons.add(new MenuButton(100, 200, "Store"));
-		listButtons.add(new MenuButton(100, 300, "Scoreboard"));
-		listButtons.add(new MenuButton(100, 400, "Exit"));
 		
+		listButtons.add(new MenuButton(500, 200, "Play", 40));
+		listButtons.get(0).SetTextPos(new Vector2D(75, 60));
+		
+		listButtons.add(new MenuButton(500, 300, "Store", 40));
+		listButtons.get(1).SetTextPos(new Vector2D(62, 60));
+		
+		listButtons.add(new MenuButton(500, 400, "Scoreboard", 30));
+		listButtons.get(2).SetTextPos(new Vector2D(32, 60));
+		
+		listButtons.add(new MenuButton(500, 500, "Exit", 40));
+		
+		//Play button should be active
 		listButtons.get(0).SetActive(true);
 		
 		backGround = new Sprite(0, 0);

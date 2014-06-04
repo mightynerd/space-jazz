@@ -20,10 +20,16 @@ public class ShopMenu {
 			this.user = user;
 			
 			listButtons = new ArrayList<MenuButton>();
-			listButtons.add(new MenuButton(100, 100, "Upgrade weapon"));
-			listButtons.add(new MenuButton(100, 200, "Upgrade armor"));
-			listButtons.add(new MenuButton(100, 300, "Buy health"));
-			listButtons.add(new MenuButton(100, 400, "Back"));
+			listButtons.add(new MenuButton(100, 100, "Upgrade weapon", 22));
+			listButtons.get(0).SetTextPos(new Vector2D(25, 54));
+			
+			listButtons.add(new MenuButton(100, 200, "Upgrade armor", 22));
+			listButtons.get(1).SetTextPos(new Vector2D(32, 54));
+			
+			listButtons.add(new MenuButton(100, 300, "Buy health", 22));
+			listButtons.get(2).SetTextPos(new Vector2D(55, 54));
+			
+			listButtons.add(new MenuButton(100, 400, "Back", 30));
 			
 			listButtons.get(0).SetActive(true);
 			
@@ -55,19 +61,40 @@ public class ShopMenu {
 			else if (inputManager.IsKeyPressed(InputManager.Key.SpaceBar) | inputManager.IsKeyPressed(InputManager.DEFAULT_ACCEPT))
 			{
 				//Action for each button
-				if (listButtons.get(selectedIndex).GetText() == "Play")
+				if (listButtons.get(selectedIndex).GetText() == "Back")
 				{
-					stateManager.SetState(StateManager.State.Game);
+					stateManager.SetState(StateManager.State.MainMenu);
 				}
-				else if (listButtons.get(selectedIndex).GetText() == "Exit")
+				else if (listButtons.get(selectedIndex).GetText() == "Upgrade weapon")
 				{
-					System.exit(0);
+					if (user.money >= StatTrack.STORE_WEAPON_COST)
+					{
+						user.money -= StatTrack.STORE_ARMOR_COST;
+						user.weaponLevel++;
+					}
+				}
+				else if (listButtons.get(selectedIndex).GetText() == "Upgrade armor")
+				{
+					if (user.money >= StatTrack.STORE_ARMOR_COST)
+					{
+						user.money -= StatTrack.STORE_ARMOR_COST;
+						user.armorLevel++;
+					}
+				}
+				else if (listButtons.get(selectedIndex).GetText() == "Buy health")
+				{
+					if (user.money >= StatTrack.STORE_HEALTH_COST)
+					{
+						user.money -= StatTrack.STORE_HEALTH_COST;
+						user.currentHealth += 25;
+					}
 				}
 			}
 			
 			for (MenuButton menuButton : listButtons) {
 				menuButton.Update(0);
 			}
+			
 		}
 		
 		private void UpdateActive()
@@ -84,6 +111,13 @@ public class ShopMenu {
 			backGround.Draw(renderer);
 			
 			renderer.DrawString("Player: " + user.userName, 20, 60, Color.WHITE, 30); 
+			
+			//Draw stats
+			renderer.DrawString("Weapon level: " + user.weaponLevel, 600, 150, Color.WHITE, 30);
+			renderer.DrawString("Armor level: " + user.armorLevel, 600, 180, Color.WHITE, 30);
+			renderer.DrawString("Current health: " + user.currentHealth, 600, 210, Color.RED, 30);
+			
+			renderer.DrawString("Money: " + user.money, 600, 250, Color.YELLOW, 30);
 			
 			for (MenuButton menuButton : listButtons) {
 				menuButton.Draw(renderer);
