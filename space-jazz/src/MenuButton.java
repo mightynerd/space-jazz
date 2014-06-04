@@ -16,7 +16,7 @@ public class MenuButton extends Sprite {
 		SetDirection(new Vector2D(0, 0));
 		this.text = text;
 		this.size = size;
-		AddTexture("menu-button-deactive.png");
+		AddTexture("menu-button-deactive2.png");
 		AddTexture("menu-button-active.png");
 	}
 	
