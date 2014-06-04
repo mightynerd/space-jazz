@@ -20,16 +20,16 @@ public class ShopMenu {
 			this.user = user;
 			
 			listButtons = new ArrayList<MenuButton>();
-			listButtons.add(new MenuButton(100, 100, "Upgrade weapon", 22));
+			listButtons.add(new MenuButton(100, 150, "Upgrade weapon", 22));
 			listButtons.get(0).SetTextPos(new Vector2D(25, 54));
 			
-			listButtons.add(new MenuButton(100, 200, "Upgrade armor", 22));
+			listButtons.add(new MenuButton(100, 250, "Upgrade armor", 22));
 			listButtons.get(1).SetTextPos(new Vector2D(32, 54));
 			
-			listButtons.add(new MenuButton(100, 300, "Buy health", 22));
+			listButtons.add(new MenuButton(100, 350, "Buy health", 22));
 			listButtons.get(2).SetTextPos(new Vector2D(55, 54));
 			
-			listButtons.add(new MenuButton(100, 400, "Back", 30));
+			listButtons.add(new MenuButton(100, 450, "Back", 30));
 			
 			listButtons.get(0).SetActive(true);
 			
@@ -112,11 +112,14 @@ public class ShopMenu {
 			
 			renderer.DrawString("Player: " + user.userName, 20, 60, Color.WHITE, 30); 
 			
+			renderer.DrawString("" + StatTrack.STORE_WEAPON_COST, 350, 210, Color.white, 30);
+			renderer.DrawString("" + StatTrack.STORE_ARMOR_COST, 350, 310, Color.white, 30);
+			renderer.DrawString("" + StatTrack.STORE_HEALTH_COST, 350, 410, Color.white, 30);
+			
 			//Draw stats
 			renderer.DrawString("Weapon level: " + user.weaponLevel, 600, 150, Color.WHITE, 30);
 			renderer.DrawString("Armor level: " + user.armorLevel, 600, 180, Color.WHITE, 30);
 			renderer.DrawString("Current health: " + user.currentHealth, 600, 210, Color.RED, 30);
-			
 			renderer.DrawString("Money: " + user.money, 600, 250, Color.YELLOW, 30);
 			
 			for (MenuButton menuButton : listButtons) {
