@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -78,6 +79,16 @@ public class Users
 			}
 			
 			i++;
+		}
+	}
+	
+	void sort()
+	{
+		Collections.sort(users);
+		
+		for (User user : users)
+		{
+			System.out.println(user.points);
 		}
 	}
 }

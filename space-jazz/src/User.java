@@ -2,7 +2,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class User
+public class User implements Comparable<User>
 {
 	public String userName;
 	public String password;
@@ -46,5 +46,11 @@ public class User
 	{
 		points += point;
 		money += point;
+	}
+
+	@Override
+	public int compareTo(User u) {
+		// TODO Auto-generated method stub
+		return u.points - points;
 	}
 }
