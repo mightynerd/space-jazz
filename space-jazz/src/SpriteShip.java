@@ -104,6 +104,18 @@ public class SpriteShip extends Sprite {
 		}
 		
 		HandleInput(input);
+		
+		if (GetHeath() < 66 && GetHeath() > 33)
+		{
+			SetCurrentTextureIndex(1);
+		}else if (GetHeath() < 33)
+		{
+			SetCurrentTextureIndex(2);
+		}else
+		{
+			SetCurrentTextureIndex(0);
+		}
+		
 		super.Update(delta);
 		
 		//Stats:
