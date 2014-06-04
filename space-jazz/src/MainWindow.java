@@ -19,7 +19,7 @@ public class MainWindow extends JFrame implements Runnable{
 	public static final int WIN_WIDTH = 1280;
 	public static final int WIN_HEIGHT = 720;
 	
-	public static final StateManager.State DEFAULT_STATE = StateManager.State.EndGame;
+	public static final StateManager.State DEFAULT_STATE = StateManager.State.MainMenu;
 	
 	//Used components
 	private InputManager inputManager;
