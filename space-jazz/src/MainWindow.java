@@ -19,7 +19,7 @@ public class MainWindow extends JFrame implements Runnable{
 	public static final int WIN_WIDTH = 1280;
 	public static final int WIN_HEIGHT = 720;
 	
-	public static final StateManager.State DEFAULT_STATE = StateManager.State.MainMenu;
+	public static final StateManager.State DEFAULT_STATE = StateManager.State.EndGame;
 	
 	//Used components
 	private InputManager inputManager;
@@ -48,6 +48,7 @@ public class MainWindow extends JFrame implements Runnable{
 	
 	MainMenu mainMenu;
 	ShopMenu shopMenu;
+	GameOverMenu gameOverMenu;
 	SpriteHud hud;
 	
 	public MainWindow(User user)
@@ -126,6 +127,7 @@ public class MainWindow extends JFrame implements Runnable{
 		
 		mainMenu = new MainMenu(stateManager, currentUser);
 		shopMenu = new ShopMenu(stateManager, currentUser);
+		gameOverMenu = new GameOverMenu(stateManager, currentUser);
 		
 		astManager = new AsteroidManager(currentUser);
 		
@@ -182,6 +184,10 @@ public class MainWindow extends JFrame implements Runnable{
 		{
 			shopMenu.Update(inputManager);
 		}
+		else if (currentState == StateManager.State.EndGame)
+		{
+			gameOverMenu.Update(inputManager);
+		}
 	}
 	
 	public void Draw()
@@ -216,6 +222,10 @@ public class MainWindow extends JFrame implements Runnable{
 		else if (currentState == StateManager.State.ShopMenu)
 		{
 			shopMenu.Draw(renderer);
+		}
+		else if (currentState == StateManager.State.EndGame)
+		{
+			gameOverMenu.Draw(renderer);
 		}
 		
 		
