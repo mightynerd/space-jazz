@@ -11,7 +11,7 @@ public class SpriteBackOverlay extends Sprite {
 	@Override
 	public void Update(float delta) {
 		
-		if (GetPosition().Y() > 720)
+		if (GetPosition().Y() >= 720)
 		{
 			System.out.println("SWAP");
 			SetPosition(new Vector2D(0, -2160));
