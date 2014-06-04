@@ -152,6 +152,7 @@ public class LoginWindow extends JFrame implements ActionListener
 				{
 					//Creates a new game
 					MainWindow m = new MainWindow(users.getUser(tfUserName.getText()));
+					m.requestFocusInWindow();
 					//Closes this screen
 					dispose();
 				}
