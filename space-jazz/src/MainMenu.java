@@ -15,6 +15,7 @@ public class MainMenu {
 	
 	//Background
 	Sprite backGround;
+	Sprite logo;
 	
 	User currentUser;
 	
@@ -45,6 +46,9 @@ public class MainMenu {
 		
 		backGround = new Sprite(0, 0);
 		backGround.AddTexture("Space pixel.png");
+		
+		logo = new Sprite(290, 70);
+		logo.AddTexture("Logo.png");
 		
 		soundMenuMusic.Play();
 	}
@@ -111,6 +115,7 @@ public class MainMenu {
 	public void Draw(Renderer renderer)
 	{
 		backGround.Draw(renderer);
+		logo.Draw(renderer);
 		
 		for (MenuButton menuButton : listButtons) {
 			menuButton.Draw(renderer);
