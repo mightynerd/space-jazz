@@ -95,6 +95,8 @@ public class FileManager
 			//Decrypts the XML
 			unencXML = enc.Decrypt(encXML);
 			
+			System.out.println(unencXML);
+			
 			//Reads the string and creates a users-class
 			StringReader sr = new StringReader(unencXML);
 			Users users = (Users) jaxbUnmarshaller.unmarshal(sr);
@@ -112,18 +114,8 @@ public class FileManager
 	//Debug
 	public static void main(String[] args)
 	{
-		User u1 = new User("Daniel", "Staples");
-		User u2 = new User("Stas", "Kollegieblock");
 		Users us = new Users();
-		
-		us.users.add(u1);
-		us.users.add(u2);
-		
 		FileManager f = new FileManager();
-		f.writeFile(us);
-		
-		
 		us = f.readFile();
-		System.out.println(us.users.get(0).userName);
 	}
 }

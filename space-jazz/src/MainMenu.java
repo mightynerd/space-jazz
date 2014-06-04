@@ -16,9 +16,12 @@ public class MainMenu {
 	//Background
 	Sprite backGround;
 	
-	public MainMenu(StateManager stateMan)
+	User currentUser;
+	
+	public MainMenu(StateManager stateMan, User user)
 	{
 		this.stateManager = stateMan;
+		currentUser = user;
 		
 		soundGameMusic = new SoundPlayer("game.wav");
 		soundMenuMusic = new SoundPlayer("menu.wav");
@@ -73,6 +76,11 @@ public class MainMenu {
 			}
 			else if (listButtons.get(selectedIndex).GetText() == "Exit")
 			{
+				FileManager f = new FileManager();
+				
+				Users users = f.readFile();
+				users.updateUser(currentUser);
+				f.writeFile(users);
 				System.exit(0);
 			}
 		}

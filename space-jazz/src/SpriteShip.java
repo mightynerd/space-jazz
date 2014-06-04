@@ -6,7 +6,7 @@ import java.util.List;
 public class SpriteShip extends Sprite {
 
 	private final int SHIP_VELOCITY = 200;
-	private int health = 100;
+	private int health;
 	private List<SpriteLaserBullet> bulletList;
 	private SoundPlayer soundPlayerShoot;
 	private SoundPlayer soundPlayerDamage;
@@ -17,6 +17,7 @@ public class SpriteShip extends Sprite {
 	public SpriteShip(int startX, int startY, StateManager stateManager, User user) {
 		super(startX, startY);
 		this.user = user;
+		health = user.currentHealth;
 		this.stateManager = stateManager;
 		bulletList = new ArrayList<SpriteLaserBullet>();
 		soundPlayerShoot = new SoundPlayer("shoot-1.wav");

@@ -65,4 +65,19 @@ public class Users
 		
 		return new User("Invalid user", "invalid");
 	}
+	
+	void updateUser(User user)
+	{
+		int i = 0;
+		
+		for (User currentUser : users)
+		{
+			if (user.userName.equals(currentUser.userName))
+			{
+				users.set(i, user);
+			}
+			
+			i++;
+		}
+	}
 }

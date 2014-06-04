@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
 
 
@@ -51,6 +52,9 @@ public class MainWindow extends JFrame implements Runnable{
 	
 	public MainWindow(User user)
 	{
+		setUndecorated(true);
+		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+		
 		//Load font
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		try {
@@ -120,7 +124,7 @@ public class MainWindow extends JFrame implements Runnable{
 		stateManager = new StateManager();
 		stateManager.SetState(DEFAULT_STATE);
 		
-		mainMenu = new MainMenu(stateManager);
+		mainMenu = new MainMenu(stateManager, currentUser);
 		shopMenu = new ShopMenu(stateManager, currentUser);
 		
 		astManager = new AsteroidManager(currentUser);
