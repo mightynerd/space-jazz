@@ -11,7 +11,8 @@ public class GameOverMenu {
 	{
 		this.user = user;
 		this.stateManager = stateMan;
-		RestartButton = new MenuButton(100, 100, "Restart");
+		RestartButton = new MenuButton(100, 100, "Restart", 30);
+		RestartButton.SetActive(true);
 	}
 	
 	public void Update(InputManager inputManager)
@@ -24,7 +25,7 @@ public class GameOverMenu {
 	
 	public void Draw(Renderer renderer)
 	{
-		renderer.DrawString("GameOver", 640, 250, Color.white, 40);
+		renderer.DrawString("GameOver", 485, 250, Color.white, 70);
 		renderer.DrawString("Points: " + user.points, 100, 60, Color.white, 30);
 		renderer.DrawString("Player: " + user.userName, 100, 60, Color.white, 30);
 		RestartButton.Draw(renderer);
