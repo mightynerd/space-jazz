@@ -90,11 +90,11 @@ public class MainMenu {
 			else if (listButtons.get(selectedIndex).GetText() == "Exit")
 			{
 				FileManager f = new FileManager();
-				
-				Users users = f.readFile();
-				users.updateUser(currentUser);
-				f.writeFile(users);
 				System.exit(0);
+			}
+			else if (listButtons.get(selectedIndex).GetText() == "Scoreboard")
+			{
+				stateManager.SetState(StateManager.State.ScoreBoard);
 			}
 		}
 		

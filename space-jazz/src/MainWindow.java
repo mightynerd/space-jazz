@@ -56,14 +56,14 @@ public class MainWindow extends JFrame implements Runnable{
 	ShopMenu shopMenu;
 	GameOverMenu gameOverMenu;
 	SpriteHud hud;
+	ScoreBoardMenu scoreBoardMenu;
 	
-    GraphicsEnvironment env;
     GraphicsDevice device;
     DisplayMode dm;
 	 
-	public MainWindow(User user)
+	public MainWindow(User user, boolean fullscreen)
 	{
-		setUndecorated(true);
+		
 		
 		//Load font
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -73,26 +73,33 @@ public class MainWindow extends JFrame implements Runnable{
 			e.printStackTrace();
 		}
 		//-----
-		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		device = env.getScreenDevices()[0];
-		dm = new DisplayMode(WIN_WIDTH, WIN_HEIGHT, device.getDisplayMode().getBitDepth(), device.getDisplayMode().getRefreshRate());
 		
-		try
+		if (fullscreen == true)
 		{
-		    Toolkit toolkit = Toolkit.getDefaultToolkit();
-		    Point hotSpot = new Point(0,0);
-		    BufferedImage cursorImage = new BufferedImage(1, 1, BufferedImage.TRANSLUCENT); 
-		    Cursor invisibleCursor = toolkit.createCustomCursor(cursorImage, hotSpot, "InvisibleCursor");        
-		    setCursor(invisibleCursor);
+			device = ge.getScreenDevices()[0];
+			dm = new DisplayMode(WIN_WIDTH, WIN_HEIGHT, device.getDisplayMode().getBitDepth(), device.getDisplayMode().getRefreshRate());
+			
+			try
+			{
+			    Toolkit toolkit = Toolkit.getDefaultToolkit();
+			    Point hotSpot = new Point(0,0);
+			    BufferedImage cursorImage = new BufferedImage(1, 1, BufferedImage.TRANSLUCENT); 
+			    Cursor invisibleCursor = toolkit.createCustomCursor(cursorImage, hotSpot, "InvisibleCursor");        
+			    setCursor(invisibleCursor);
+			}
+			catch (Exception ex)
+			{
+				this.setSize(WIN_WIDTH, WIN_HEIGHT);
+			}
+			
+			device.setFullScreenWindow(this);
+			device.setDisplayMode(dm);
 		}
-		
-		catch (Exception ex)
+		else
 		{
 			this.setSize(WIN_WIDTH, WIN_HEIGHT);
+			this.setVisible(true);
 		}
-		
-		device.setFullScreenWindow(this);
-		device.setDisplayMode(dm);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -154,6 +161,7 @@ public class MainWindow extends JFrame implements Runnable{
 		mainMenu = new MainMenu(stateManager, currentUser);
 		shopMenu = new ShopMenu(stateManager, currentUser);
 		gameOverMenu = new GameOverMenu(stateManager, currentUser);
+		scoreBoardMenu = new ScoreBoardMenu(currentUser, stateManager);
 		
 		astManager = new AsteroidManager(currentUser);
 		
@@ -200,6 +208,12 @@ public class MainWindow extends JFrame implements Runnable{
 			if (inputManager.IsKeyPressed(inputManager.DEFAULT_BACK))
 			{
 				stateManager.SetState(StateManager.State.MainMenu);
+				
+				//Save progress
+				FileManager f = new FileManager();
+				Users users = f.readFile();
+				users.updateUser(currentUser);
+				f.writeFile(users);
 			}
 		}
 		else if (currentState == StateManager.State.MainMenu)
@@ -213,6 +227,10 @@ public class MainWindow extends JFrame implements Runnable{
 		else if (currentState == StateManager.State.EndGame)
 		{
 			gameOverMenu.Update(inputManager);
+		}
+		else if (currentState == StateManager.State.ScoreBoard)
+		{
+			scoreBoardMenu.Update(inputManager);
 		}
 	}
 	
@@ -252,6 +270,10 @@ public class MainWindow extends JFrame implements Runnable{
 		else if (currentState == StateManager.State.EndGame)
 		{
 			gameOverMenu.Draw(renderer);
+		}
+		else if (currentState == StateManager.State.ScoreBoard)
+		{
+			scoreBoardMenu.Draw(renderer);
 		}
 		
 		

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,6 +24,8 @@ public class LoginWindow extends JFrame implements ActionListener
 	JButton btnSignIn;
 	JButton btnRegister;
 	
+	JCheckBox chkFullscreen;
+	
 	GridBagConstraints c;
 	
 	public LoginWindow()
@@ -35,6 +38,8 @@ public class LoginWindow extends JFrame implements ActionListener
 		
 		btnSignIn = new JButton("Sign in");
 		btnRegister = new JButton("Register");
+		
+		chkFullscreen = new JCheckBox("Fullscreen");
 		
 		c = new GridBagConstraints();
 		
@@ -84,6 +89,10 @@ public class LoginWindow extends JFrame implements ActionListener
 		
 		c.gridx = 1;
 		add(btnRegister, c);
+		
+		c.gridx = 0;
+		c.gridy = 3;
+		add(chkFullscreen, c);
 	}
 
 	@Override
@@ -151,7 +160,7 @@ public class LoginWindow extends JFrame implements ActionListener
 				if (users.correctPassword(tfUserName.getText(), String.valueOf(tfPasswd.getPassword())))
 				{
 					//Creates a new game
-					MainWindow m = new MainWindow(users.getUser(tfUserName.getText()));
+					MainWindow m = new MainWindow(users.getUser(tfUserName.getText()), chkFullscreen.isSelected());
 
 					m.requestFocusInWindow();
 					//Closes this screen
