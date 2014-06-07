@@ -49,12 +49,40 @@ public class LoginWindow extends JFrame implements ActionListener
 	
 	void setupWindow()
 	{
-		setVisible(true);
+		System.out.println("os.name:" + System.getProperty("os.name", "generic").toLowerCase());
+		if (System.getProperty("os.name", "generic").toLowerCase().contains("win"))
+		{
+			//Running windows
+			System.out.println("Running on Windows");
+			setResizable(false);
+		}
+		else if (System.getProperty("os.name", "generic").toLowerCase().contains("nux"))
+		{
+			//Linux-like
+			System.out.println("Running on Linux");
+			//Must be resizable for some reason
+			setResizable(true);
+			//Fullscreen doesn't work
+			chkFullscreen.setEnabled(false);
+		}
+		else if (System.getProperty("os.name", "generic").toLowerCase().contains("mac"))
+		{
+			//OSX
+			System.out.println("Running on OS X");
+			//Must be resizable for some reason
+			setResizable(true);
+			//Fullscreen doesn't work
+			chkFullscreen.setEnabled(false);
+		}
+		else
+		{
+			System.out.println("Running on unknown/unsupported OS, using compability mode (everything enabled)");
+		}
+		
 		setLayout(new GridBagLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(200, 150);
 		setLocation(400, 200);
-		setResizable(false);
 		setTitle("Space-Jazz");
 		//For the layout
 		c.insets = new Insets(3, 3, 3, 3);
@@ -65,6 +93,8 @@ public class LoginWindow extends JFrame implements ActionListener
 		tfPasswd.addActionListener(this);
 		btnSignIn.addActionListener(this);
 		btnRegister.addActionListener(this);
+		
+		setVisible(true);
 	}
 	
 	void addComponents()
