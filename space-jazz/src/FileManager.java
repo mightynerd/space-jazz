@@ -52,7 +52,7 @@ public class FileManager
 			usersFile.close();
 		}
 		
-		catch (JAXBException | IOException e)
+		catch (Exception e)
 		{
 			System.out.println(e.getMessage());
 		}
@@ -104,7 +104,7 @@ public class FileManager
 			return users;
 		}
 		
-		catch (JAXBException | IOException e)
+		catch (Exception e)
 		{
 			System.out.println(e.toString());
 			return null;

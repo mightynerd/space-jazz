@@ -69,7 +69,7 @@ public class MainWindow extends JFrame implements Runnable{
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		try {
 			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("content" + File.separator + "04B_03__.TTF")));
-		} catch (FontFormatException | IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		//-----
