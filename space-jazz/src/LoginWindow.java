@@ -55,7 +55,7 @@ public class LoginWindow extends JFrame implements ActionListener
 		setSize(200, 150);
 		setLocation(400, 200);
 		setResizable(false);
-		setTitle("Sign in");
+		setTitle("Space-Jazz");
 		//For the layout
 		c.insets = new Insets(3, 3, 3, 3);
 		c.fill = GridBagConstraints.BOTH;
@@ -108,8 +108,8 @@ public class LoginWindow extends JFrame implements ActionListener
 			//If there are no username or password it will create a message box
 			if (tfUserName.getText().equals("") || String.valueOf(tfPasswd.getPassword()).equals(""))
 			{
-				System.out.println("Username or password empty");
-				JOptionPane.showMessageDialog(null, "You have to write both a password and a username");
+				System.out.println("Username or password empty!");
+				JOptionPane.showMessageDialog(null, "You have to write both a password and a username!");
 			}
 			
 			else
@@ -127,12 +127,13 @@ public class LoginWindow extends JFrame implements ActionListener
 					//Rewrites the file
 					f.writeFile(users);
 					System.out.println("User added");
+					JOptionPane.showMessageDialog(null, "Your account has been registered. You may now sign in.");
 				}
 				
 				//If it exists it creates a message box
 				else
 				{
-					JOptionPane.showMessageDialog(null, "User already exists");
+					JOptionPane.showMessageDialog(null, "User already exists!");
 				}
 			}
 		}

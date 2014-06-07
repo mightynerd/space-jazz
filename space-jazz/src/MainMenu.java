@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,10 @@ public class MainMenu {
 	private List<MenuButton> listButtons;
 	private int selectedIndex = 0;
 	
+	//Sound effects/music
 	SoundPlayer soundGameMusic;
 	SoundPlayer soundMenuMusic;
+	SoundPlayer soundMenuClick;
 	
 	StateManager stateManager;
 	
@@ -24,8 +27,10 @@ public class MainMenu {
 		this.stateManager = stateMan;
 		currentUser = user;
 		
+		//Load sounds
 		soundGameMusic = new SoundPlayer("game.wav");
 		soundMenuMusic = new SoundPlayer("menu.wav");
+		soundMenuClick = new SoundPlayer("menu-click.wav");
 		
 		//List of buttons
 		listButtons = new ArrayList<MenuButton>();
@@ -44,12 +49,15 @@ public class MainMenu {
 		//Play button should be active
 		listButtons.get(0).SetActive(true);
 		
+		//Background sprite setup
 		backGround = new Sprite(0, 0);
 		backGround.AddTexture("Space pixel.png");
 		
+		//Logo sprite setup
 		logo = new Sprite(290, 70);
 		logo.AddTexture("Logo.png");
 		
+		//Play menu music
 		soundMenuMusic.Play();
 	}
 	
@@ -76,11 +84,23 @@ public class MainMenu {
 		//Accept button
 		else if (inputManager.IsKeyPressed(InputManager.Key.SpaceBar) | inputManager.IsKeyPressed(InputManager.DEFAULT_ACCEPT))
 		{
+			soundMenuClick.Stop();
+			soundMenuClick.Reset();
+			soundMenuClick.Play();
+			
 			//Action for each button
 			if (listButtons.get(selectedIndex).GetText() == "Play")
 			{
 				soundMenuMusic.Stop();
 				soundGameMusic.Play();
+				
+				//Reset if health equal or below 0
+				if (currentUser.currentHealth <= 0)
+				{
+					//Reset user
+					new FileManager().readFile().resetUser(currentUser);
+				}
+				
 				stateManager.SetState(StateManager.State.Game);
 			}
 			else if (listButtons.get(selectedIndex).GetText() == "Store")
@@ -89,7 +109,12 @@ public class MainMenu {
 			}
 			else if (listButtons.get(selectedIndex).GetText() == "Exit")
 			{
+				//Save stats before exit
 				FileManager f = new FileManager();
+				Users users = f.readFile();
+				users.updateUser(currentUser);
+				f.writeFile(users);
+				
 				System.exit(0);
 			}
 			else if (listButtons.get(selectedIndex).GetText() == "Scoreboard")
@@ -105,6 +130,7 @@ public class MainMenu {
 	
 	private void UpdateActive()
 	{
+		//Updates all the active property for all buttons
 		for (MenuButton menuButton : listButtons) {
 			menuButton.SetActive(false);
 		}

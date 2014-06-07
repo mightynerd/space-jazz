@@ -16,6 +16,8 @@ public class FileManager
 	//Our own encryptor class
 	StringEncryptor enc = new StringEncryptor();
 	
+	private final String USERS_PATH = "users.bin";
+	
 	public FileManager()
 	{
 
@@ -27,7 +29,7 @@ public class FileManager
 		try
 		{
 			//The file that is going to be written to
-			FileOutputStream usersFile = new FileOutputStream("users.bin");
+			FileOutputStream usersFile = new FileOutputStream(USERS_PATH);
 			StringWriter sw = new StringWriter();
 			byte[] encXML = null;
 			
@@ -44,8 +46,10 @@ public class FileManager
 			enc.ObjectCrypter("1863189616648964");
 			//Encrypts the XML
 			encXML = enc.Encrypt(sw.toString());
+			
 			//Debug
-			System.out.println(sw.toString());
+			System.out.println("Writing file");
+			//System.out.println(sw.toString());
 			
 			//Writes the encrypted XML to the file and closes the stream
 			usersFile.write(encXML);
@@ -64,20 +68,20 @@ public class FileManager
 		try
 		{
 			//The file that will be read
-			File usersFile = new File(System.getProperty("user.dir") + "\\users.bin");
+			File usersFile = new File(USERS_PATH);
 			
 			//If the file doesn't exist it creates it with a debug-user.
 			if (!usersFile.exists())
 			{
 				Users users = new Users();
-				User user = new User("Admin", "StaplesKollegie");
+				User user = new User("Admin", "StaplesKollegieBlock");
 				user.points = 1000;
 				users.users.add(user);
 				writeFile(users);
 			}
 			
 			//A fielreader
-			FileInputStream inputStream = new FileInputStream(System.getProperty("user.dir") + "\\users.bin");
+			FileInputStream inputStream = new FileInputStream(USERS_PATH);
 			//A byte array with the size of the file
 			byte[] encXML = new byte[(int) usersFile.length()];
 			String unencXML;
@@ -95,7 +99,8 @@ public class FileManager
 			//Decrypts the XML
 			unencXML = enc.Decrypt(encXML);
 			
-			System.out.println(unencXML);
+			System.out.println("Reading file");
+			//System.out.println(unencXML);
 			
 			//Reads the string and creates a users-class
 			StringReader sr = new StringReader(unencXML);

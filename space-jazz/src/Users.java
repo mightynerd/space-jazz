@@ -82,6 +82,17 @@ public class Users
 		}
 	}
 	
+	void resetUser(User user)
+	{		
+		user.armorLevel = 1;
+		user.currentHealth = 100;
+		user.money = 0;
+		user.points = 0;
+		user.weaponLevel = 1;
+		
+		updateUser(user);
+	}
+	
 	void sort()
 	{
 		Collections.sort(users);

@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.DisplayMode;
 import java.awt.Font;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Observer;
 
+import javax.swing.AbstractButton;
 import javax.swing.JFrame;
 import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
@@ -101,7 +104,7 @@ public class MainWindow extends JFrame implements Runnable{
 			this.setVisible(true);
 		}
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 		
 		inputManager = new InputManager();
@@ -114,6 +117,7 @@ public class MainWindow extends JFrame implements Runnable{
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
+
 
 	@Override
 	public void run() {

@@ -34,7 +34,7 @@ public class AsteroidManager {
 		currentTime = System.currentTimeMillis();
 		
 		//Spawn evert 500ms
-		if (currentTime - previousTime > 500)
+		if (currentTime - previousTime > (300 - (20 * user.weaponLevel)))
 		{
 			//Spawn new
 			previousTime = currentTime;

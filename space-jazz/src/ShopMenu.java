@@ -10,6 +10,8 @@ public class ShopMenu {
 		
 		StateManager stateManager;
 		private User user;
+		private SoundPlayer soundMenuClick;
+		private SoundPlayer soundMenuFailed;
 		
 		//Background
 		Sprite backGround;
@@ -18,6 +20,9 @@ public class ShopMenu {
 		{
 			this.stateManager = stateMan;
 			this.user = user;
+			
+			soundMenuClick = new SoundPlayer("menu-click.wav");
+			soundMenuFailed = new SoundPlayer("menu-failed.wav");
 			
 			listButtons = new ArrayList<MenuButton>();
 			listButtons.add(new MenuButton(100, 150, "Upgrade weapon", 22));
@@ -63,30 +68,53 @@ public class ShopMenu {
 				//Action for each button
 				if (listButtons.get(selectedIndex).GetText() == "Back")
 				{
+					soundMenuClick.Reset();
+					soundMenuClick.Play();
 					stateManager.SetState(StateManager.State.MainMenu);
 				}
 				else if (listButtons.get(selectedIndex).GetText() == "Upgrade weapon")
 				{
 					if (user.money >= StatTrack.STORE_WEAPON_COST)
 					{
+						soundMenuClick.Reset();
+						soundMenuClick.Play();
 						user.money -= StatTrack.STORE_ARMOR_COST;
 						user.weaponLevel++;
+					}
+					else
+					{
+						soundMenuFailed.Reset();
+						soundMenuFailed.Play();
 					}
 				}
 				else if (listButtons.get(selectedIndex).GetText() == "Upgrade armor")
 				{
 					if (user.money >= StatTrack.STORE_ARMOR_COST)
 					{
+						soundMenuClick.Reset();
+						soundMenuClick.Play();
 						user.money -= StatTrack.STORE_ARMOR_COST;
 						user.armorLevel++;
+					}
+					else
+					{
+						soundMenuFailed.Reset();
+						soundMenuFailed.Play();
 					}
 				}
 				else if (listButtons.get(selectedIndex).GetText() == "Buy health")
 				{
 					if (user.money >= StatTrack.STORE_HEALTH_COST)
 					{
+						soundMenuClick.Reset();
+						soundMenuClick.Play();
 						user.money -= StatTrack.STORE_HEALTH_COST;
 						user.currentHealth += 25;
+					}
+					else
+					{
+						soundMenuFailed.Reset();
+						soundMenuFailed.Play();
 					}
 				}
 			}
