@@ -78,7 +78,7 @@ public class ShopMenu {
 					{
 						soundMenuClick.Reset();
 						soundMenuClick.Play();
-						user.money -= StatTrack.STORE_ARMOR_COST;
+						user.money -= StatTrack.STORE_WEAPON_COST;
 						user.weaponLevel++;
 					}
 					else

@@ -48,7 +48,8 @@ public class SpriteShip extends Sprite {
 				toRemoveAst.add(spriteAsteroid);
 				soundPlayerDamage.Reset();
 				soundPlayerDamage.Play();
-				RemoveHealth(StatTrack.ASTEROID_CRASH_DAMAGE * (1 / user.armorLevel));
+				// y = 33 * 0,9^x where x is the weapon level and y is the damage
+				RemoveHealth((int)(StatTrack.ASTEROID_CRASH_DAMAGE * (Math.pow(0.9, user.weaponLevel))));
 			}
 		}
 		
@@ -57,6 +58,7 @@ public class SpriteShip extends Sprite {
 			asteroidList.remove(spriteAsteroid);
 		}
 		
+		//Shoot
 		if (input.IsKeyPressed(InputManager.DEFAULT_SHOOT))
 		{
 			soundPlayerShoot.Reset();
@@ -97,6 +99,7 @@ public class SpriteShip extends Sprite {
 			bulletList.remove(spriteLaserBullet);
 		}
 		
+		//End game if health equal or below 0
 		if (GetHeath() <= 0)
 		{
 			stateManager.SetState(StateManager.State.EndGame);
@@ -104,6 +107,7 @@ public class SpriteShip extends Sprite {
 		
 		HandleInput(input);
 		
+		//Change textures depending on health
 		if (GetHeath() < 66 && GetHeath() > 33)
 		{
 			SetCurrentTextureIndex(1);
