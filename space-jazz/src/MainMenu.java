@@ -22,13 +22,13 @@ public class MainMenu {
 	
 	User currentUser;
 	
-	public MainMenu(StateManager stateMan, User user)
+	public MainMenu(StateManager stateMan, User user, SoundPlayer gameMusic)
 	{
 		this.stateManager = stateMan;
 		currentUser = user;
 		
 		//Load sounds
-		soundGameMusic = new SoundPlayer("game.wav");
+		soundGameMusic = gameMusic;
 		soundMenuMusic = new SoundPlayer("menu.wav");
 		soundMenuClick = new SoundPlayer("menu-click.wav");
 		
@@ -63,6 +63,13 @@ public class MainMenu {
 	
 	public void Update(InputManager inputManager)
 	{
+		//Loop music
+		if (soundMenuMusic.IsPlaying() == false)
+		{
+			soundMenuMusic.Reset();
+			soundMenuMusic.Play();
+		}
+		
 		//Move selected down
 		if (inputManager.IsKeyPressed(InputManager.Key.ArrowDown) | inputManager.IsKeyPressed(InputManager.DEFAULT_DOWN))
 		{

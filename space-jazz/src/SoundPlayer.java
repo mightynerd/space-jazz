@@ -35,6 +35,11 @@ public class SoundPlayer {
 		}
 	}
 	
+	public boolean IsPlaying()
+	{
+		return clip.isRunning();
+	}
+	
 	public void Reset()
 	{
 		clip.stop();

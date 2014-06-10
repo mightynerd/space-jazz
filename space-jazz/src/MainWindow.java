@@ -63,6 +63,8 @@ public class MainWindow extends JFrame implements Runnable{
 	
     GraphicsDevice device;
     DisplayMode dm;
+    
+    SoundPlayer soundGameMusic;
 	 
 	public MainWindow(User user, boolean fullscreen)
 	{
@@ -162,7 +164,9 @@ public class MainWindow extends JFrame implements Runnable{
 		stateManager = new StateManager();
 		stateManager.SetState(DEFAULT_STATE);
 		
-		mainMenu = new MainMenu(stateManager, currentUser);
+		soundGameMusic = new SoundPlayer("game.wav");
+		
+		mainMenu = new MainMenu(stateManager, currentUser, soundGameMusic);
 		shopMenu = new ShopMenu(stateManager, currentUser);
 		gameOverMenu = new GameOverMenu(stateManager, currentUser);
 		scoreBoardMenu = new ScoreBoardMenu(currentUser, stateManager);
@@ -209,8 +213,16 @@ public class MainWindow extends JFrame implements Runnable{
 			
 			astManager.Update(delta);	
 			
+			//Loop music
+			if (soundGameMusic.IsPlaying() == false)
+			{
+				soundGameMusic.Reset();
+				soundGameMusic.Play();
+			}
+			
 			if (inputManager.IsKeyPressed(inputManager.DEFAULT_BACK))
 			{
+				soundGameMusic.Stop();
 				stateManager.SetState(StateManager.State.MainMenu);
 				
 				//Save progress
@@ -219,6 +231,7 @@ public class MainWindow extends JFrame implements Runnable{
 				users.updateUser(currentUser);
 				f.writeFile(users);
 			}
+		
 		}
 		else if (currentState == StateManager.State.MainMenu)
 		{
